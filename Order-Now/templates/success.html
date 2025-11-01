@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Confirmed – Loom Abayas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Playfair Display', serif;
+      background: linear-gradient(135deg, #FDF7F2 0%, #F5EDE3 100%);
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .success-container {
+      max-width: 600px;
+      width: 100%;
+      background: white;
+      padding: 50px 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      text-align: center;
+      animation: fadeInUp 0.6s ease-out;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #8F826B 0%, #A89885 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 25px;
+      animation: scaleIn 0.5s ease-out 0.2s both;
+    }
+    
+    @keyframes scaleIn {
+      from {
+        transform: scale(0);
+      }
+      to {
+        transform: scale(1);
+      }
+    }
+    
+    .success-icon::after {
+      content: "✓";
+      font-size: 48px;
+      color: white;
+      font-weight: bold;
+    }
+    
+    h1 {
+      color: #8F826B;
+      font-size: 32px;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+    
+    .order-id-box {
+      background: #FFF9F0;
+      border: 2px solid #8F826B;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 25px 0;
+    }
+    
+    .order-id-label {
+      color: #61664E;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    
+    .order-id {
+      color: #8F826B;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: 2px;
+    }
+    
+    .message {
+      color: #61664E;
+      font-size: 16px;
+      line-height: 1.8;
+      margin: 20px 0;
+    }
+    
+    .message-emphasis {
+      color: #8F826B;
+      font-weight: 600;
+    }
+    
+    .next-steps {
+      background: #FEFDFB;
+      border: 1px solid #E8DFD0;
+      border-radius: 8px;
+      padding: 25px;
+      margin: 30px 0;
+      text-align: left;
+    }
+    
+    .next-steps h3 {
+      color: #8F826B;
+      font-size: 18px;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    
+    .next-steps ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .next-steps li {
+      color: #61664E;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 12px;
+      padding-left: 30px;
+      position: relative;
+    }
+    
+    .next-steps li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #8F826B;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    
+    .buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+    
+    .btn {
+      padding: 14px 30px;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-family: 'Playfair Display', serif;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #8F826B 0%, #A89885 100%);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(143, 130, 107, 0.3);
+    }
+    
+    .btn-secondary {
+      background: transparent;
+      color: #8F826B;
+      border: 2px solid #8F826B;
+    }
+    
+    .btn-secondary:hover {
+      background: #8F826B;
+      color: white;
+    }
+    
+    .contact-info {
+      margin-top: 30px;
+      padding-top: 30px;
+      border-top: 2px solid #F5EDE3;
+    }
+    
+    .contact-info p {
+      color: #888;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+    
+    .contact-link {
+      color: #8F826B;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    .contact-link:hover {
+      text-decoration: underline;
+    }
+    
+    @media (max-width: 600px) {
+      .success-container {
+        padding: 35px 25px;
+      }
+      
+      h1 {
+        font-size: 26px;
+      }
+      
+      .order-id {
+        font-size: 20px;
+      }
+      
+      .buttons {
+        flex-direction: column;
+      }
+      
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="success-container">
+    <div class="success-icon"></div>
+    
+    <h1>Order Confirmed!</h1>
+    
+    <div class="order-id-box">
+      <div class="order-id-label">Your Order ID</div>
+      <div class="order-id" id="orderId">Loading...</div>
+    </div>
+    
+    <p class="message">
+      <strong>Jazakallah Khair</strong> for your order! 🌙<br>
+      We have received your order successfully and our team will review it shortly.
+    </p>
+    
+    <div class="next-steps">
+      <h3>What happens next?</h3>
+      <ul>
+        <li>You will receive a confirmation message on <span class="message-emphasis">Instagram</span> within 24 hours</li>
+        <li>Our team will verify your payment screenshot</li>
+        <li>We will confirm your order details and delivery timeline</li>
+        <li>Your custom abaya will be crafted with care, Insha'Allah</li>
+        <li>You'll receive updates about your order status</li>
+      </ul>
+    </div>
+    
+    <p class="message">
+      Please save your <span class="message-emphasis">Order ID</span> for future reference.
+    </p>
+    
+    <div class="buttons">
+      <a href="https://www.instagram.com/loom.abayas" target="_blank" class="btn btn-primary">
+        Follow Us on Instagram
+      </a>
+      <a href="/" class="btn btn-secondary">
+        Place Another Order
+      </a>
+    </div>
+    
+    <div class="contact-info">
+      <p>Need help? Contact us:</p>
+      <p>
+        Instagram: <a href="https://www.instagram.com/loom.abayas" target="_blank" class="contact-link">@loom.abayas</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // Order ID is passed from Flask backend
+    document.getElementById('orderId').textContent = '{{ order_id }}';
+  </script>
+</body>
+</html>

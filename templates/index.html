@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Loom Abayas – Order Form</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Playfair Display', serif;
+      background: linear-gradient(135deg, #F8F5F1 0%, #EDE8E3 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    body::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(143, 130, 107, 0.05) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: float 15s ease-in-out infinite;
+    }
+    
+    body::after {
+      content: '';
+      position: absolute;
+      bottom: -50%;
+      left: -10%;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(143, 130, 107, 0.04) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: float 20s ease-in-out infinite reverse;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-30px); }
+    }
+    
+    .container {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      background: linear-gradient(to bottom, #FFFFFF 0%, #FDFCFB 100%);
+      padding: 80px 60px;
+      border-radius: 24px;
+      box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.08),
+        0 0 0 1px rgba(143, 130, 107, 0.1);
+      max-width: 700px;
+      width: 100%;
+      animation: fadeIn 0.8s ease;
+      border: 1px solid rgba(143, 130, 107, 0.1);
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .brand-logo {
+      font-size: 18px;
+      font-weight: 500;
+      color: #8F826B;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 25px;
+      opacity: 0.8;
+      animation: fadeInDown 0.8s ease;
+    }
+    
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 0.8;
+        transform: translateY(0);
+      }
+    }
+    
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(to right, transparent, #8F826B, transparent);
+      margin: 0 auto 30px;
+      animation: fadeIn 1s ease 0.2s backwards;
+    }
+    
+    h1 {
+      font-size: 52px;
+      font-weight: 700;
+      color: #2C2923;
+      margin-bottom: 20px;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      animation: fadeInUp 0.8s ease 0.1s backwards;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: #61664E;
+      line-height: 1.6;
+      margin-bottom: 50px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      animation: fadeInUp 0.8s ease 0.2s backwards;
+    }
+    
+    .order-button {
+      display: inline-block;
+      padding: 22px 80px;
+      background: linear-gradient(135deg, #8F826B 0%, #A89885 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all 0.4s ease;
+      box-shadow: 0 8px 30px rgba(143, 130, 107, 0.25);
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.8s ease 0.4s backwards;
+    }
+    
+    .order-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .order-button:hover::before {
+      left: 100%;
+    }
+    
+    .order-button:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(143, 130, 107, 0.35);
+    }
+    
+    .order-button:active {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(143, 130, 107, 0.3);
+    }
+    
+    .footer-note {
+      margin-top: 50px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      color: #8F826B;
+      font-style: italic;
+      opacity: 0.7;
+      animation: fadeIn 1s ease 0.6s backwards;
+    }
+    
+    /* Premium decorative elements */
+    .corner-ornament {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      opacity: 0.15;
+    }
+    
+    .corner-ornament.top-left {
+      top: -10px;
+      left: -10px;
+      background: radial-gradient(circle at top left, #8F826B 0%, transparent 70%);
+    }
+    
+    .corner-ornament.bottom-right {
+      bottom: -10px;
+      right: -10px;
+      background: radial-gradient(circle at bottom right, #8F826B 0%, transparent 70%);
+    }
+    
+    /* Tablet Devices */
+    @media (max-width: 768px) {
+      .container {
+        padding: 60px 45px;
+      }
+      
+      .brand-logo {
+        font-size: 16px;
+        letter-spacing: 2px;
+      }
+      
+      h1 {
+        font-size: 42px;
+      }
+      
+      .subtitle {
+        font-size: 18px;
+        margin-bottom: 40px;
+      }
+      
+      .order-button {
+        padding: 20px 70px;
+        font-size: 17px;
+      }
+    }
+    
+    /* Mobile Devices */
+    @media (max-width: 480px) {
+      body {
+        padding: 15px;
+      }
+      
+      .container {
+        padding: 50px 30px;
+        border-radius: 20px;
+      }
+      
+      .brand-logo {
+        font-size: 14px;
+        letter-spacing: 2px;
+        margin-bottom: 20px;
+      }
+      
+      .divider {
+        width: 50px;
+        margin-bottom: 25px;
+      }
+      
+      h1 {
+        font-size: 34px;
+        margin-bottom: 18px;
+      }
+      
+      .subtitle {
+        font-size: 16px;
+        margin-bottom: 40px;
+        padding: 0 10px;
+      }
+      
+      .order-button {
+        padding: 18px 50px;
+        font-size: 16px;
+        width: 100%;
+      }
+      
+      .footer-note {
+        font-size: 14px;
+        margin-top: 40px;
+      }
+      
+      .corner-ornament {
+        width: 70px;
+        height: 70px;
+      }
+    }
+    
+    /* Small Mobile Devices */
+    @media (max-width: 360px) {
+      .container {
+        padding: 45px 25px;
+      }
+      
+      h1 {
+        font-size: 30px;
+      }
+      
+      .subtitle {
+        font-size: 15px;
+      }
+      
+      .order-button {
+        padding: 16px 40px;
+        font-size: 15px;
+        letter-spacing: 0.5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="corner-ornament top-left"></div>
+    <div class="corner-ornament bottom-right"></div>
+    
+    <div class="brand-logo">Loom Abayas</div>
+    <div class="divider"></div>
+    
+    <h1>Order Form</h1>
+    <p class="subtitle">Elegant abayas for every occasion.</p>
+    
+    <a href="/order-form" class="order-button">Order Now</a>
+    
+    <p class="footer-note">Crafted with elegance, worn with grace</p>
+  </div>
+</body>
+</html>

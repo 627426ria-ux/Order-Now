@@ -1,0 +1,10 @@
+# Ignore sensitive files
+.env
+secrets/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+email_secret.txt
+secrets/credentials.json

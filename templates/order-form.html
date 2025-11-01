@@ -1,0 +1,2588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Form</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Playfair Display', serif;
+      background: linear-gradient(135deg, #F8F5F1 0%, #EDE8E3 100%);
+      padding: 20px;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      right: -10%;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(143, 130, 107, 0.03) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: float 20s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-40px); }
+    }
+    
+    .form-container {
+      max-width: 750px;
+      margin: 0 auto;
+      background: linear-gradient(to bottom, #FFFFFF 0%, #FDFCFB 100%);
+      padding: 50px;
+      border-radius: 20px;
+      box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.08),
+        0 0 0 1px rgba(143, 130, 107, 0.1);
+      animation: fadeIn 0.6s ease-in;
+      border: 1px solid rgba(143, 130, 107, 0.08);
+      position: relative;
+    }
+
+    .form-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(to right, transparent, #8F826B, transparent);
+      border-radius: 2px;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .welcome {
+      text-align: center;
+      margin-bottom: 45px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid rgba(143, 130, 107, 0.15);
+      position: relative;
+    }
+
+    .brand-logo {
+      font-size: 16px;
+      font-weight: 500;
+      color: #8F826B;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      opacity: 0.8;
+    }
+
+    .divider {
+      width: 50px;
+      height: 2px;
+      background: linear-gradient(to right, transparent, #8F826B, transparent);
+      margin: 0 auto 25px;
+    }
+    
+    .welcome h2 {
+      color: #2C2923;
+      font-size: 32px;
+      margin-bottom: 18px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    
+    .welcome p {
+      font-family: 'Cormorant Garamond', serif;
+      color: #61664E;
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+    
+    .welcome .italic {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: #8F826B;
+      font-size: 15px;
+      font-weight: 400;
+    }
+
+    /* PREMIUM CAROUSEL STYLES */
+    .offers-carousel {
+      background: linear-gradient(135deg, #FFFBF5 0%, #FFF6E8 50%, #FFF0DC 100%);
+      padding: 40px 30px;
+      margin: 40px 0;
+      position: relative;
+      overflow: hidden;
+      min-height: 320px;
+      border-radius: 20px;
+      border: 2px solid rgba(143, 130, 107, 0.15);
+      box-shadow: 
+        0 10px 40px rgba(143, 130, 107, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+
+    .offers-carousel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, 
+        transparent 0%, 
+        #8F826B 20%, 
+        #C5B8A0 50%, 
+        #8F826B 80%, 
+        transparent 100%);
+      animation: shimmer 3s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { opacity: 0.8; }
+      50% { opacity: 1; }
+    }
+
+    .offers-carousel::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+      pointer-events: none;
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+      50% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.1); }
+    }
+
+    .offers-carousel h3 {
+      color: #2C2923;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 50px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      position: relative;
+      z-index: 2;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .carousel-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 380px;
+      margin: 0 auto;
+      min-height: 220px;
+      perspective: 1000px;
+    }
+
+    .carousel-track {
+      position: relative;
+      width: 100%;
+      transform-style: preserve-3d;
+    }
+
+    .carousel-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0;
+      transform: translateX(100%) scale(0.9) rotateY(20deg);
+      transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+      pointer-events: none;
+      filter: blur(3px);
+    }
+
+    .carousel-slide.active {
+      opacity: 1;
+      transform: translateX(0) scale(1) rotateY(0deg);
+      pointer-events: auto;
+      position: relative;
+      filter: blur(0);
+      z-index: 2;
+    }
+
+    .carousel-slide.prev {
+      opacity: 0.3;
+      transform: translateX(-100%) scale(0.85) rotateY(-20deg);
+      filter: blur(2px);
+      z-index: 1;
+    }
+
+    .offer-item {
+      background: linear-gradient(135deg, #FFFFFF 0%, #FEFEFE 100%);
+      padding: 65px 35px 35px 35px;
+      border-radius: 24px;
+      border: 2px solid rgba(143, 130, 107, 0.25);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 20px;
+      box-shadow: 
+        0 15px 45px rgba(143, 130, 107, 0.18),
+        0 5px 15px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      min-height: 210px;
+      max-width: 380px;
+      position: relative;
+      margin: 0 auto;
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      backdrop-filter: blur(10px);
+    }
+
+    .offer-item::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(135deg, rgba(143, 130, 107, 0.2) 0%, transparent 50%, rgba(143, 130, 107, 0.1) 100%);
+      border-radius: 24px;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .offer-item:hover {
+      box-shadow: 
+        0 20px 60px rgba(143, 130, 107, 0.25),
+        0 8px 20px rgba(0, 0, 0, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+      transform: translateY(-8px) scale(1.02);
+      border-color: #8F826B;
+    }
+
+    .offer-item:hover::before {
+      opacity: 1;
+    }
+
+    
+
+   
+
+    .offer-item:hover .offer-icon {
+      transform: translateX(-50%) translateY(-5px) scale(1.1);
+      box-shadow: 
+        0 15px 40px rgba(143, 130, 107, 0.35),
+        0 0 0 4px #8F826B,
+        0 0 0 8px rgba(143, 130, 107, 0.15);
+    }
+
+    .offer-text {
+      font-family: 'Cormorant Garamond', serif;
+      color: #61664E;
+      font-size: 15px;
+      line-height: 1.7;
+      text-align: center;
+      width: 100%;
+      font-weight: 400;
+    }
+
+    .offer-text strong {
+      font-family: 'Playfair Display', serif;
+      color: #2C2923;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 10px;
+      font-size: 18px;
+      letter-spacing: 0.5px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .carousel-controls {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 10px;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .carousel-btn {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FFFFFF 0%, #FFF9F0 100%);
+      border: 2px solid #8F826B;
+      color: #8F826B;
+      font-size: 20px;
+      cursor: pointer;
+      pointer-events: auto;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 5px 15px rgba(143, 130, 107, 0.2);
+      opacity: 0.8;
+    }
+
+    .carousel-btn:hover {
+      background: linear-gradient(135deg, #8F826B 0%, #A89885 100%);
+      color: white;
+      transform: scale(1.1);
+      box-shadow: 0 8px 25px rgba(143, 130, 107, 0.35);
+      opacity: 1;
+    }
+
+    .carousel-btn:active {
+      transform: scale(0.95);
+    }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 30px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .carousel-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #D4C5B0;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: none;
+      padding: 0;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .carousel-dot::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid #8F826B;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .carousel-dot.active {
+      background: linear-gradient(135deg, #8F826B 0%, #A89885 100%);
+      width: 30px;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(143, 130, 107, 0.4);
+    }
+
+    .carousel-dot.active::before {
+      opacity: 1;
+      animation: ripple 1.5s ease-out infinite;
+    }
+
+    @keyframes ripple {
+      0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.6;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1.8);
+        opacity: 0;
+      }
+    }
+
+    .carousel-dot:hover {
+      background: #A89885;
+      transform: scale(1.3);
+      box-shadow: 0 4px 12px rgba(143, 130, 107, 0.3);
+    }
+
+    
+    .form-group {
+      margin-bottom: 24px;
+      width: 100%;
+      position: relative;
+    }
+    
+    .form-group label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #2C2923;
+      font-weight: 600;
+      margin-bottom: 10px;
+      letter-spacing: 0.3px;
+    }
+
+    .label-icon {
+      font-size: 16px;
+      color: #8F826B;
+    }
+    
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 14px 18px 14px 45px;
+      border: 1px solid rgba(143, 130, 107, 0.25);
+      border-radius: 10px;
+      font-size: 15px;
+      font-family: 'Cormorant Garamond', serif;
+      background: #FEFEFE;
+      transition: all 0.3s ease;
+      color: #2C2923;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #8F826B;
+      font-size: 18px;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #8F826B;
+      box-shadow: 0 0 0 4px rgba(143, 130, 107, 0.08);
+      background: white;
+    }
+
+    .form-group input:focus + .input-icon,
+    .form-group select:focus + .input-icon {
+      opacity: 1;
+    }
+    
+    .note {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      color: #8F826B;
+      margin-top: 8px;
+      font-style: italic;
+      line-height: 1.6;
+      padding-left: 24px;
+      position: relative;
+    }
+
+    .note::before {
+      content: 'ℹ';
+      position: absolute;
+      left: 4px;
+      font-style: normal;
+      opacity: 0.8;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    .product-wrapper {
+      margin-bottom: 20px;
+      padding: 20px;
+      background: linear-gradient(135deg, #FEFEFE 0%, #FFF9F0 100%);
+      border: 1px solid rgba(143, 130, 107, 0.15);
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(143, 130, 107, 0.06);
+      transition: all 0.3s ease;
+    }
+
+    .product-wrapper:hover {
+      box-shadow: 0 6px 20px rgba(143, 130, 107, 0.1);
+      transform: translateY(-2px);
+    }
+    
+    .product-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+    }
+    
+    .product-row select {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .product-row .quantity {
+      width: 80px;
+      flex-shrink: 0;
+      text-align: center;
+      padding-left: 18px;
+    }
+    
+    .remove-product-btn {
+      background-color: transparent;
+      color: #8F826B;
+      border: none;
+      padding: 0;
+      font-size: 24px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: Arial, sans-serif;
+      line-height: 1;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border-radius: 4px;
+    }
+    
+    .remove-product-btn:hover {
+      color: #d64545;
+      background: #FFE8E8;
+      transform: scale(1.1);
+    }
+    
+    .color-field-wrapper {
+      margin-top: 12px;
+      width: 100%;
+    }
+    
+    .color-field-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #61664E;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .color-field-label::before {
+      content: '🎨';
+      font-size: 14px;
+    }
+    
+    .color-field-wrapper input,
+    .color-field-wrapper select {
+      width: 100%;
+      padding: 10px 15px 10px 38px;
+      border: 1px solid #D4C5B0;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: 'Playfair Display', serif;
+      background: white;
+    }
+    
+    .color-field-wrapper input:focus,
+    .color-field-wrapper select:focus {
+      outline: none;
+      border-color: #8F826B;
+      box-shadow: 0 0 0 3px rgba(143, 130, 107, 0.1);
+    }
+
+    .size-field-wrapper {
+      margin-top: 12px;
+      width: 100%;
+    }
+
+    .size-field-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #61664E;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .size-field-label::before {
+      content: '📏';
+      font-size: 14px;
+    }
+
+    .size-field-wrapper select,
+    .size-field-wrapper input {
+      width: 100%;
+      padding: 10px 15px 10px 38px;
+      border: 1px solid #D4C5B0;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: 'Playfair Display', serif;
+      background: white;
+    }
+
+    .size-field-wrapper select:focus,
+    .size-field-wrapper input:focus {
+      outline: none;
+      border-color: #8F826B;
+      box-shadow: 0 0 0 3px rgba(143, 130, 107, 0.1);
+    }
+
+    .custom-size-field {
+      margin-top: 8px;
+    }
+    
+    .shawl-note {
+      font-size: 12px;
+      color: #8F826B;
+      margin-top: 8px;
+      font-style: italic;
+      padding: 6px 10px 6px 32px;
+      background: #FFF9F0;
+      border-left: 3px solid #8F826B;
+      border-radius: 4px;
+      position: relative;
+    }
+
+    .shawl-note::before {
+      content: '✨';
+      position: absolute;
+      left: 10px;
+      font-style: normal;
+    }
+    
+    #addProductBtn {
+      background: transparent;
+      color: #8F826B;
+      border: 2px solid #8F826B;
+      padding: 10px 20px;
+      margin-top: 12px;
+      margin-bottom: 25px;
+      border-radius: 10px;
+      font-size: 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+
+    #addProductBtn::before {
+      content: '➕';
+      font-size: 16px;
+    }
+    
+    #addProductBtn:hover {
+      background: #8F826B;
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(143, 130, 107, 0.25);
+    }
+    
+    button[type="button"]#previewBtn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #8F826B 0%, #A89885 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 15px;
+      font-family: 'Playfair Display', serif;
+      transition: all 0.4s ease;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      box-shadow: 0 8px 25px rgba(143, 130, 107, 0.25);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    button[type="button"]#previewBtn::after {
+      content: '👁';
+      font-size: 20px;
+    }
+
+    button[type="button"]#previewBtn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    button[type="button"]#previewBtn:hover::before {
+      left: 100%;
+    }
+    
+    button[type="button"]#previewBtn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(143, 130, 107, 0.35);
+    }
+    
+    .receipt-box {
+      border: 2px solid #8F826B;
+      padding: 25px;
+      margin-top: 25px;
+      background: #FEFDFB;
+      border-radius: 8px;
+      animation: slideIn 0.3s ease;
+    }
+    
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .receipt-box h3 {
+      color: #8F826B;
+      margin-bottom: 20px;
+      font-size: 22px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .receipt-box h3::before {
+      content: '';
+      font-size: 24px;
+    }
+    
+    .receipt-box table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    
+    .receipt-box table th,
+    .receipt-box table td {
+      padding: 10px;
+      text-align: left;
+      border: 1px solid #D4C5B0;
+      font-size: 14px;
+    }
+    
+    .receipt-box table th {
+      background: #F5EDE3;
+      color: #61664E;
+      font-weight: 600;
+    }
+    
+    .btn {
+      padding: 10px 24px;
+      margin: 5px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-family: 'Playfair Display', serif;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    #proceedBtn {
+      background: #8F826B;
+      color: white;
+    }
+
+    #proceedBtn::before {
+      content: '→';
+      font-size: 16px;
+      font-weight: bold;
+    }
+    
+    #proceedBtn:hover {
+      background: #75695A;
+      transform: translateY(-2px);
+    }
+
+    #proceedBtn:disabled {
+      background: #D0D0D0;
+      color: #888;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    #proceedBtn:disabled:hover {
+      transform: none;
+      box-shadow: none;
+    }
+    
+    #cancelBtn {
+      background: #E0E0E0;
+      color: #666;
+    }
+
+    #cancelBtn::before {
+      content: '✕';
+      font-size: 16px;
+    }
+    
+    #cancelBtn:hover {
+      background: #D0D0D0;
+    }
+
+    .payment-info {
+      background: #FFF9F0;
+      border: 2px solid #8F826B;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+      animation: slideIn 0.3s ease;
+    }
+
+    .payment-info h4 {
+      color: #8F826B;
+      font-size: 18px;
+      margin-bottom: 15px;
+      text-align: center;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .payment-info h4::before {
+      content: '';
+      font-size: 20px;
+    }
+
+    .payment-detail {
+      background: white;
+      padding: 12px 15px;
+      margin: 8px 0;
+      border-radius: 6px;
+      border: 1px solid #E8DFD0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .payment-detail-label {
+      color: #61664E;
+      font-weight: 500;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .payment-detail-label::before {
+      content: '•';
+      color: #8F826B;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .payment-detail-value {
+      color: #8F826B;
+      font-weight: 600;
+      font-size: 14px;
+      text-align: right;
+      word-break: break-all;
+    }
+
+    .payment-note {
+      color: #8F826B;
+      font-size: 13px;
+      text-align: center;
+      margin-top: 15px;
+      font-style: italic;
+      line-height: 1.5;
+      padding: 10px;
+      background: white;
+      border-radius: 6px;
+      position: relative;
+      padding-left: 32px;
+    }
+
+    .payment-note::before {
+      content: '💡';
+      position: absolute;
+      left: 10px;
+      font-style: normal;
+    }
+
+    .payment-upload-wrapper {
+      background: white;
+      padding: 20px;
+      margin-top: 15px;
+      border-radius: 6px;
+      border: 2px dashed #D4C5B0;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .payment-upload-wrapper:hover {
+      border-color: #8F826B;
+      background: #FEFDFB;
+    }
+
+    .upload-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: #61664E;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .upload-label::before {
+      content: '';
+      font-size: 18px;
+    }
+
+    .upload-instructions {
+      color: #888;
+      font-size: 12px;
+      margin-bottom: 15px;
+      font-style: italic;
+    }
+
+    .file-input-wrapper {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+
+    .file-input-wrapper input[type="file"] {
+      position: absolute;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    .file-input-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #8F826B 0%, #A89885 100%);
+      color: white;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .file-input-button::before {
+      content: '';
+      font-size: 16px;
+    }
+
+    .file-input-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(143, 130, 107, 0.3);
+    }
+
+    .file-preview {
+      margin-top: 15px;
+      padding: 12px;
+      background: #FFF9F0;
+      border-radius: 6px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid #E8DFD0;
+    }
+
+    .file-preview.active {
+      display: flex;
+    }
+
+    .file-preview-icon {
+      font-size: 24px;
+    }
+
+    .file-preview-info {
+      flex: 1;
+      text-align: left;
+    }
+
+    .file-preview-name {
+      color: #61664E;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 3px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .file-preview-name::before {
+      content: '✓';
+      color: #4CAF50;
+      font-weight: bold;
+    }
+
+    .file-preview-size {
+      color: #888;
+      font-size: 11px;
+    }
+
+    .file-remove-btn {
+      background: transparent;
+      border: none;
+      color: #d64545;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 5px;
+      transition: all 0.2s ease;
+      border-radius: 4px;
+    }
+
+    .file-remove-btn:hover {
+      background: #FFE8E8;
+      transform: scale(1.1);
+    }
+
+    .warning-message {
+      background: #FFF3CD;
+      border: 2px solid #FFC107;
+      border-radius: 6px;
+      padding: 15px;
+      margin-top: 15px;
+      text-align: center;
+      display: none;
+      animation: slideIn 0.3s ease;
+    }
+
+    .warning-message.active {
+      display: block;
+    }
+
+    .warning-message p {
+      color: #856404;
+      font-size: 14px;
+      font-weight: 600;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .warning-message p::before {
+      content: '⚠️';
+      font-size: 18px;
+    }
+
+    .discount-badge {
+      background: linear-gradient(135deg, #FFF9F0 0%, #FFF3E0 100%);
+      border: 2px solid #8F826B;
+      color: #8F826B;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-align: center;
+      margin: 10px 0;
+      animation: slideIn 0.3s ease;
+      box-shadow: 0 2px 8px rgba(143, 130, 107, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .discount-badge::before {
+      content: '';
+      font-size: 18px;
+    }
+
+    .free-shipping-badge {
+      background: linear-gradient(135deg, #FFF9F0 0%, #FFF3E0 100%);
+      border: 2px solid #8F826B;
+      color: #8F826B;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-align: center;
+      margin: 10px 0;
+      animation: slideIn 0.3s ease;
+      box-shadow: 0 2px 8px rgba(143, 130, 107, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .free-shipping-badge::before {
+      content: '';
+      font-size: 18px;
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 12px;
+      max-width: 600px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      animation: slideIn 0.3s ease;
+    }
+
+    .modal-header {
+      background: linear-gradient(135deg, #8F826B 0%, #A89885 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 12px 12px 0 0;
+      text-align: center;
+    }
+
+    .modal-header h3 {
+      font-size: 22px;
+      font-weight: 600;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .modal-header h3::before {
+      content: '✓';
+      font-size: 28px;
+      background: white;
+      color: #8F826B;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-body {
+      padding: 25px;
+    }
+
+    .modal-section {
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #E8DFD0;
+    }
+
+    .modal-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+
+    .modal-section h4 {
+      color: #8F826B;
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-section:nth-child(1) h4::before {
+      content: '';
+    }
+
+    .modal-section:nth-child(2) h4::before {
+      content: '';
+    }
+
+    .modal-section:nth-child(3) h4::before {
+      content: '';
+    }
+
+    .modal-section:nth-child(4) h4::before {
+      content: '';
+    }
+
+    .modal-detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      font-size: 14px;
+    }
+
+    .modal-detail-label {
+      color: #61664E;
+      font-weight: 500;
+    }
+
+    .modal-detail-value {
+      color: #8F826B;
+      font-weight: 600;
+      text-align: right;
+      max-width: 60%;
+      word-break: break-word;
+    }
+
+    .modal-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    .modal-table th,
+    .modal-table td {
+      padding: 10px;
+      text-align: left;
+      border: 1px solid #D4C5B0;
+      font-size: 13px;
+    }
+
+    .modal-table th {
+      background: #F5EDE3;
+      color: #61664E;
+      font-weight: 600;
+    }
+
+    .modal-total {
+      background: #FFF9F0;
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    .modal-total-label {
+      color: #61664E;
+      font-size: 14px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .modal-total-label::before {
+      content: '';
+    }
+
+    .modal-total-value {
+      color: #8F826B;
+      font-size: 24px;
+      font-weight: 600;
+      margin-top: 5px;
+    }
+
+    .modal-footer {
+      padding: 20px 25px;
+      background: #FEFDFB;
+      border-radius: 0 0 12px 12px;
+      text-align: center;
+      border-top: 1px solid #E8DFD0;
+    }
+
+    .modal-footer .btn {
+      min-width: 120px;
+    }
+
+    .modal-confirm-btn {
+      background: #8F826B;
+      color: white;
+    }
+
+    .modal-confirm-btn::before {
+      content: '✓';
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .modal-confirm-btn:hover {
+      background: #75695A;
+      transform: translateY(-2px);
+    }
+
+    .modal-cancel-btn {
+      background: #E0E0E0;
+      color: #666;
+    }
+
+    .modal-cancel-btn::before {
+      content: '←';
+      font-size: 16px;
+    }
+
+    .modal-cancel-btn:hover {
+      background: #D0D0D0;
+    }
+
+    #submitOrderBtn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #submitOrderBtn::before {
+      content: '';
+      font-size: 18px;
+    }
+    
+    .instagram-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-align: center;
+      margin-top: 30px;
+      padding: 15px;
+      background: linear-gradient(135deg, #8F826B 0%, #A89885 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .instagram-link::before {
+      content: '';
+      font-size: 20px;
+    }
+    
+    .instagram-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(143, 130, 107, 0.3);
+    }
+    
+    @media (max-width: 600px) {
+      .form-container {
+        padding: 25px 20px;
+      }
+      
+      .product-row {
+        flex-wrap: wrap;
+      }
+      
+      .product-row select {
+        flex: 1 1 100%;
+      }
+      
+      .product-row .quantity {
+        flex: 1;
+      }
+
+      .payment-detail {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+      }
+
+      .payment-detail-value {
+        text-align: left;
+      }
+
+      .modal-content {
+        max-height: 95vh;
+      }
+
+      .modal-detail-row {
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .modal-detail-value {
+        max-width: 100%;
+        text-align: left;
+      }
+
+      .offer-item {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <div class="welcome">
+      <h2>Order Form</h2>
+      <p>Please fill in your details below to confirm your order. Once submitted, our team will reach out to you for confirmation and delivery arrangements.</p>
+      <p class="italic">We're excited to craft elegance and modesty for you, Inshaa' Allah</p>
+    </div>
+
+    <div class="offers-carousel">
+      <h3>✨ Special Offers For You ✨</h3>
+      <div class="carousel-wrapper">
+        <div class="carousel-track" id="carouselTrack">
+          <div class="carousel-slide active">
+            <div class="offer-item">
+              <div class="offer-text">
+                <strong>Quantity Discount:</strong>  Save 10 % when you purchase more than 3 abayas and enjoy a 15% off when you purchase 5 abayas or more!
+              </div>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <div class="offer-item">
+              <div class="offer-text">
+                <strong>Free Delivery in UAE:</strong> No delivery charges on orders above AED 330                 
+              </div>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <div class="offer-item">
+              <div class="offer-text">
+                <strong>Free Shipping in India:</strong> No shipping charges on orders above ₹8000
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-dots" id="carouselDots">
+        <button class="carousel-dot active" data-index="0"></button>
+        <button class="carousel-dot" data-index="1"></button>
+        <button class="carousel-dot" data-index="2"></button>
+      </div>
+    </div>
+
+    <form id="orderForm" method="POST" action="/order-form" enctype="multipart/form-data">
+            <div class="form-group">
+        <label for="full_name">
+          <span class="label-icon"></span>
+          Name
+        </label>
+        <div class="input-wrapper">
+          <input type="text" id="full_name" name="full_name" placeholder="Enter your full name" required>
+          <span class="input-icon"></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="insta_username">
+          <span class="label-icon"></span>
+          Instagram Username
+        </label>
+        <div class="input-wrapper">
+          <input type="text" id="insta_username" name="insta_username" placeholder="@your_username" required>
+          <span class="input-icon"></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">
+          <span class="label-icon"></span>
+          Email ID
+        </label>
+        <div class="input-wrapper">
+          <input type="email" id="email" name="email" placeholder="yourmail@example.com" required>
+          <span class="input-icon"></span>
+        </div>
+      </div>
+
+      <div class="form-group" id="productSection">
+        <label>
+          <span class="label-icon"></span>
+          Products
+        </label>
+        <div class="product-wrapper" data-row-index="0">
+          <div class="product-row" data-row-index="0">
+            <select name="pid[]" class="pid" required data-row-index="0">
+              <option value="">Select Product</option>
+              <option value="P01">P01 – Keffiyeh Abaya</option>
+              <option value="P02">P02 – Zahrah Abaya</option>
+              <option value="P03">P03 – Black abaya with white embroidered sleeves</option>
+              <option value="P04">P04 – Hala Abaya</option>
+              <option value="P05">P05 – Launan Abaya</option>
+              <option value="P06">P06 – Yasmin Abaya</option>
+              <option value="P07">P07 – Cape Abaya</option>
+              <option value="P08">P08 – Flow Pleat Abaya-Double Chiffon</option>
+              <option value="P09">P09 – Flow Pleat Abaya-Nida</option>
+              <option value="P10">P10 – Classic Red Abaya</option>
+              <option value="P10">P11 – Bronze Abaya</option>
+              <option value="P10">P12 – Asmirah</option>
+              <option value="P10">P13 – Sahar</option>
+              <option value="P10">P14 – Classy Dark Olive</option>
+              <option value="P10">P15 – Insha Abaya</option>
+              <option value="P10">P16 – Black Lace Abaya</option>
+              <option value="P10">P17 – Beige Coat Abaya</option>
+              <option value="P10">P18 – Rua Abaya</option>
+              <option value="P10">P19 – Ayra</option>
+              <option value="custom">Custom Design</option>
+            </select>
+            <input type="number" name="quantity[]" class="quantity" min="1" value="1" placeholder="Qty" required>
+          </div>
+          <div class="size-field-container" id="size_field_0"></div>
+          <div class="color-field-container" id="color_field_0"></div>
+          <div class="shawl-note-container" id="shawl_note_0"></div>
+        </div>
+      </div>
+      <button type="button" id="addProductBtn">Add Another Product</button>
+
+      <div class="form-group">
+        <label for="Additional_Requirements">
+          <span class="label-icon"></span>
+          Additional Requirements
+        </label>
+        <div class="input-wrapper">
+          <input type="text" id="Additional_Requirements" name="Additional_Requirements" placeholder="Enter your requirements" required>
+          <span class="input-icon"></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="additional_sheila">
+          <span class="label-icon"></span>
+          Additional Sheila
+        </label>
+        <select id="additional_sheila" name="additional_sheila" required>
+          <option value="">YES/NO</option>
+          <option value="YES">YES</option>
+          <option value="NO">NO</option>
+        </select>
+        <div class="note">
+          Short shawl included. For Sheila above 2m, price increases by 5 AED per 0.25m in UAE (with corresponding price in India).
+        </div>
+      </div>
+
+      <div class="form-group hidden" id="sheila_meter_field">
+        <label for="sheila_meter">
+          <span class="label-icon"></span>
+          Additional Sheila Length (meters)
+        </label>
+        <div class="input-wrapper">
+          <input type="number" id="sheila_meter" name="sheila_meter" min="0.25" step="0.25" placeholder="Enter required meters">
+          <span class="input-icon"></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="country">
+          <span class="label-icon"></span>
+          Country
+        </label>
+        <select id="country" name="country" required>
+          <option value="">Select Country</option>
+          <option value="UAE">UAE</option>
+          <option value="India">India</option>
+        </select>
+      </div>
+
+      <div class="form-group hidden" id="fast_delivery_field">
+        <label for="fast_delivery">
+          <span class="label-icon"></span>
+          Fast Delivery (DTDC in India)
+        </label>
+        <select id="fast_delivery" name="fast_delivery">
+          <option value="NO">No (Rs 450)</option>
+          <option value="YES">Yes (Rs 550)</option>
+        </select>
+      </div>
+
+      <!-- UAE Address Fields -->
+      <div id="uaeAddressSection" class="hidden">
+        <div class="form-group">
+          <label for="apartment_number">
+            <span class="label-icon"></span>
+            Apartment Number
+          </label>
+          <div class="input-wrapper">
+            <input type="text" id="apartment_number" name="apartment_number" placeholder="Enter your apartment number">
+            <span class="input-icon"></span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="house_name">
+            <span class="label-icon"></span>
+            House Name / Building Name
+          </label>
+          <div class="input-wrapper">
+            <input type="text" id="house_name" name="house_name" placeholder="Enter house or building name">
+            <span class="input-icon"></span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="street_name_uae">
+            <span class="label-icon"></span>
+            Street Name
+          </label>
+          <div class="input-wrapper">
+            <input type="text" id="street_name_uae" name="street_name_uae" placeholder="Enter your street name">
+            <span class="input-icon"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="landmark">
+            <span class="label-icon"></span>
+            Landmark
+          </label>
+          <div class="input-wrapper">
+            <input type="text" id="landmark" name="landmark" placeholder="Enter nearby landmark">
+            <span class="input-icon"></span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="area_name">
+            <span class="label-icon"></span>
+            Area Name
+          </label>
+          <div class="input-wrapper">
+            <input type="text" id="area_name" name="area_name" placeholder="Enter area name">
+            <span class="input-icon"></span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="emirate">
+            <span class="label-icon"></span>
+            City / Emirate
+          </label>
+          <div class="input-wrapper">
+            <input type="text" id="emirate" name="emirate" placeholder="Enter emirate/city">
+            <span class="input-icon"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- India Address Fields -->
+      <div id="indiaAddressSection">
+        <div class="form-group">
+          <label for="house">
+            <span class="label-icon"></span>
+            House Name
+          </label>
+          <div class="input-wrapper">
+            <input type="text" id="house" name="house" placeholder="Enter your house name">
+            <span class="input-icon"></span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="street_name">
+            <span class="label-icon"></span>
+            Street Name
+          </label>
+          <div class="input-wrapper">
+            <input type="text" id="street_name" name="street_name" placeholder="Enter your street name">
+            <span class="input-icon"></span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="city">
+            <span class="label-icon"></span>
+            City
+          </label>
+          <div class="input-wrapper">
+            <input type="text" id="city" name="city" placeholder="Enter your city">
+            <span class="input-icon"></span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="district">
+            <span class="label-icon"></span>
+            District
+          </label>
+          <div class="input-wrapper">
+            <input type="text" id="district" name="district" placeholder="Enter your district">
+            <span class="input-icon"></span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="pincode">
+            <span class="label-icon"></span>
+            Pincode
+          </label>
+          <div class="input-wrapper">
+            <input type="number" id="pincode" name="pincode" placeholder="Enter your pincode">
+            <span class="input-icon"></span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="contact_number">
+          <span class="label-icon"></span>
+          Contact Number
+        </label>
+        <div class="input-wrapper">
+          <input type="text" id="contact_number" name="contact_number" placeholder="Phone / WhatsApp" required>
+          <span class="input-icon"></span>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="queries">
+          <span class="label-icon"></span>
+          Queries
+        </label>
+        <div class="input-wrapper">
+          <input type="text" id="queries" name="queries" placeholder="Any Queries">
+          <span class="input-icon"></span>
+        </div>
+      </div>
+
+      <button type="button" id="previewBtn">Preview Receipt</button>
+
+      <div id="receipt" class="receipt-box hidden">
+        <h3>Receipt Preview</h3>
+        <div id="receiptDetails"></div>
+        
+        <div style="text-align: center; margin-top: 20px;">
+          <button type="button" id="proceedBtn" class="btn">Proceed</button>
+          <button type="button" id="cancelBtn" class="btn">Cancel</button>
+        </div>
+      </div>
+        
+      <div id="paymentInfo" class="payment-info hidden">
+        <h4>Payment Information</h4>
+        <div id="paymentDetails"></div>
+        <p class="payment-note">Please complete the payment and upload the screenshot below</p>
+        <div class="payment-upload-wrapper">
+          <label class="upload-label">Upload Payment Screenshot</label>
+          <p class="upload-instructions">Accepted formats: JPG, PNG, PDF (Max 5MB)</p>
+          <div class="file-input-wrapper">
+            <input type="file" id="paymentScreenshot" name="payment_screenshot" accept="image/jpeg,image/jpg,image/png,application/pdf">
+            <div class="file-input-button">Choose File</div>
+          </div>
+          <div class="file-preview" id="filePreview">
+            <span class="file-preview-icon"></span>
+            <div class="file-preview-info">
+              <div class="file-preview-name" id="fileName"></div>
+              <div class="file-preview-size" id="fileSize"></div>
+            </div>
+            <button type="button" class="file-remove-btn" id="removeFileBtn">×</button>
+          </div>
+        </div>
+        <div class="warning-message" id="warningMessage">
+          <p>You've made changes to the form. Please click "Preview Receipt" again to update your order details.</p>
+        </div>
+          
+        <div style="text-align: center; margin-top: 20px;">
+          <button type="button" id="submitOrderBtn" class="btn" disabled style="background: #8F826B; color: white; padding: 14px 28px; font-size: 16px; font-weight: 600;">Submit Order</button>
+        </div>
+      </div>
+    </form>
+
+    <a class="instagram-link" href="https://www.instagram.com/loom.abayas" target="_blank">
+      Follow us on Instagram @loom.abayas
+    </a>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div class="modal-overlay" id="confirmModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Confirm Your Order</h3>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <h4>Customer Details</h4>
+          <div id="modalCustomerDetails"></div>
+        </div>
+        <div class="modal-section">
+          <h4>Product Details</h4>
+          <table class="modal-table" id="modalProductTable"></table>
+        </div>
+
+        <div class="modal-section">
+          <h4>Delivery Address</h4>
+          <div id="modalAddress"></div>
+        </div>
+
+        <div class="modal-section">
+          <h4>Order Summary</h4>
+          <table class="modal-table" id="modalSummaryTable"></table>
+          <div class="modal-total">
+            <div class="modal-total-label">Grand Total</div>
+            <div class="modal-total-value" id="modalGrandTotal"></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn modal-confirm-btn" id="confirmOrderBtn">Confirm Order</button>
+        <button type="button" class="btn modal-cancel-btn" id="modalCancelBtn">Go Back</button>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+   // PREMIUM CAROUSEL FUNCTIONALITY
+   let currentSlide = 0;
+    const totalSlides = 3;
+    let carouselInterval;
+    let isTransitioning = false;
+
+    function updateCarousel(index, direction = 'next') {
+      if (isTransitioning) return;
+      isTransitioning = true;
+
+      const slides = document.querySelectorAll('.carousel-slide');
+      const dots = document.querySelectorAll('.carousel-dot');
+      
+      // Remove all classes first
+      slides.forEach(slide => {
+        slide.classList.remove('active', 'prev');
+      });
+      
+      // Set previous slide
+      const prevIndex = currentSlide;
+      if (direction === 'next') {
+        slides[prevIndex].classList.add('prev');
+      }
+      
+      // Set active slide
+      slides[index].classList.add('active');
+      
+      // Update dots
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+      
+      currentSlide = index;
+      
+      setTimeout(() => {
+        isTransitioning = false;
+      }, 800);
+    }
+
+    function nextSlide() {
+      const next = (currentSlide + 1) % totalSlides;
+      updateCarousel(next, 'next');
+    }
+
+    function prevSlide() {
+      const prev = (currentSlide - 1 + totalSlides) % totalSlides;
+      updateCarousel(prev, 'prev');
+    }
+
+    function startCarousel() {
+      carouselInterval = setInterval(nextSlide, 4000);
+    }
+
+    function stopCarousel() {
+      clearInterval(carouselInterval);
+    }
+
+    // Initialize carousel
+    startCarousel();
+
+    
+
+    // Dot click handlers
+    document.querySelectorAll('.carousel-dot').forEach(dot => {
+      dot.addEventListener('click', function() {
+        stopCarousel();
+        const index = parseInt(this.dataset.index);
+        const direction = index > currentSlide ? 'next' : 'prev';
+        updateCarousel(index, direction);
+        startCarousel();
+      });
+    });
+
+    // Pause on hover
+    const carouselElement = document.querySelector('.offers-carousel');
+    carouselElement.addEventListener('mouseenter', stopCarousel);
+    carouselElement.addEventListener('mouseleave', startCarousel);
+
+
+
+
+    let rowCounter = 0;
+    let formSnapshot = null;
+    let receiptGenerated = false;
+    let calculatedTotal = 0;
+
+    const countrySelect = document.getElementById("country");
+    const uaeAddressSection = document.getElementById("uaeAddressSection");
+    const indiaAddressSection = document.getElementById("indiaAddressSection");
+
+    // Show/hide address sections based on country selection
+    countrySelect.addEventListener('change', function(){
+      if(this.value === "UAE"){
+        uaeAddressSection.classList.remove("hidden");
+        indiaAddressSection.classList.add("hidden");
+        
+        // Set required attributes for UAE fields
+        document.getElementById("apartment_number").setAttribute('required','required');
+        document.getElementById("house_name").setAttribute('required','required');
+        document.getElementById("street_name_uae").setAttribute('required','required');
+        document.getElementById("landmark").setAttribute('required','required');
+        document.getElementById("area_name").setAttribute('required','required');
+        document.getElementById("emirate").setAttribute('required','required');
+        
+        // Remove required from India fields
+        document.getElementById("house").removeAttribute('required');
+        document.getElementById("street_name").removeAttribute('required');
+        document.getElementById("city").removeAttribute('required');
+        document.getElementById("district").removeAttribute('required');
+        document.getElementById("pincode").removeAttribute('required');
+      } else if(this.value === "India"){
+        uaeAddressSection.classList.add("hidden");
+        indiaAddressSection.classList.remove("hidden");
+        
+        // Remove required from UAE fields
+        document.getElementById("apartment_number").removeAttribute('required');
+        document.getElementById("house_name").removeAttribute('required');
+        document.getElementById("street_name_uae").removeAttribute('required');
+        document.getElementById("landmark").removeAttribute('required');
+        document.getElementById("area_name").removeAttribute('required');
+        document.getElementById("emirate").removeAttribute('required');
+        
+        // Set required attributes for India fields
+        document.getElementById("house").setAttribute('required','required');
+        document.getElementById("street_name").setAttribute('required','required');
+        document.getElementById("city").setAttribute('required','required');
+        document.getElementById("district").setAttribute('required','required');
+        document.getElementById("pincode").setAttribute('required','required');
+      }
+    });
+
+    const fastDeliveryField = document.getElementById("fast_delivery_field");
+    const fastDeliverySelect = document.getElementById("fast_delivery");
+    
+    countrySelect.addEventListener('change', function(){
+      if(this.value==="India"){
+        fastDeliveryField.classList.remove("hidden");
+      } else {
+        fastDeliveryField.classList.add("hidden");
+        fastDeliverySelect.value="NO";
+      }
+    });
+
+    const addProductBtn = document.getElementById("addProductBtn");
+    const productSection = document.getElementById("productSection");
+    
+    addProductBtn.addEventListener("click", function(){
+      rowCounter++;
+      const newWrapper = document.createElement("div");
+      newWrapper.classList.add("product-wrapper");
+      newWrapper.setAttribute("data-row-index", rowCounter);
+      newWrapper.innerHTML = `
+        <div class="product-row" data-row-index="${rowCounter}">
+          <select name="pid[]" class="pid" required data-row-index="${rowCounter}">
+            <option value="">Select Product</option>
+            <option value="P01">P01 – Keffiyeh Abaya</option>
+            <option value="P02">P02 – Zahrah Abaya</option>
+            <option value="P03">P03 – Black abaya with white embroidered sleeves</option>
+            <option value="P04">P04 – Hala Abaya</option>
+            <option value="P05">P05 – Launan Abaya</option>
+            <option value="P06">P06 – Yasmin Abaya</option>
+            <option value="P07">P07 – Cape Abaya</option>
+            <option value="P08">P08 – Flow Pleat Abaya</option>
+            <option value="P09">P09 – Flow Pleat Abaya</option>
+            <option value="P10">P10 – Classic Red Abaya</option>
+            <option value="custom">Custom Design</option>
+          </select>
+          <input type="number" name="quantity[]" class="quantity" min="1" value="1" placeholder="Qty" required>
+          <button type="button" class="remove-product-btn">×</button>
+        </div>
+        <div class="size-field-container" id="size_field_${rowCounter}"></div>
+        <div class="color-field-container" id="color_field_${rowCounter}"></div>
+        <div class="shawl-note-container" id="shawl_note_${rowCounter}"></div>
+      `;
+      productSection.appendChild(newWrapper);
+      
+      const removeBtn = newWrapper.querySelector('.remove-product-btn');
+      removeBtn.addEventListener('click', function(){
+        newWrapper.remove();
+        if(receiptGenerated) {
+          showWarning();
+        }
+      });
+    });
+
+    function captureFormSnapshot() {
+      const formData = new FormData(document.getElementById('orderForm'));
+      formSnapshot = {};
+      for (let [key, value] of formData.entries()) {
+        if (key !== 'payment_screenshot') {
+          if (formSnapshot[key]) {
+            if (Array.isArray(formSnapshot[key])) {
+              formSnapshot[key].push(value);
+            } else {
+              formSnapshot[key] = [formSnapshot[key], value];
+            }
+          } else {
+            formSnapshot[key] = value;
+          }
+        }
+      }
+    }
+
+    function hasFormChanged() {
+      if (!formSnapshot) return false;
+      
+      const currentData = new FormData(document.getElementById('orderForm'));
+      const currentSnapshot = {};
+      
+      for (let [key, value] of currentData.entries()) {
+        if (key !== 'payment_screenshot') {
+          if (currentSnapshot[key]) {
+            if (Array.isArray(currentSnapshot[key])) {
+              currentSnapshot[key].push(value);
+            } else {
+              currentSnapshot[key] = [currentSnapshot[key], value];
+            }
+          } else {
+            currentSnapshot[key] = value;
+          }
+        }
+      }
+      
+      return JSON.stringify(formSnapshot) !== JSON.stringify(currentSnapshot);
+    }
+
+    function showWarning() {
+      document.getElementById('warningMessage').classList.add('active');
+      document.getElementById('proceedBtn').disabled = true;
+      const fileInput = document.getElementById('paymentScreenshot');
+      fileInput.disabled = true;
+      fileInput.style.cursor = 'not-allowed';
+    }
+
+    function hideWarning() {
+      document.getElementById('warningMessage').classList.remove('active');
+      document.getElementById('proceedBtn').disabled = false;
+      const fileInput = document.getElementById('paymentScreenshot');
+      fileInput.disabled = false;
+      fileInput.style.cursor = 'pointer';
+    }
+
+    const orderForm = document.getElementById('orderForm');
+    orderForm.addEventListener('change', function(e) {
+      if (receiptGenerated && e.target.name !== 'payment_screenshot') {
+        if (hasFormChanged()) {
+          showWarning();
+        }
+      }
+    });
+    
+    document.addEventListener('click', function(e) {
+      if(e.target.classList.contains('remove-product-btn') && receiptGenerated) {
+        showWarning();
+      }
+    });
+
+    orderForm.addEventListener('input', function(e) {
+      if (receiptGenerated && e.target.name !== 'payment_screenshot') {
+        if (hasFormChanged()) {
+          showWarning();
+        }
+      }
+    });
+
+    const addSheilaSelect = document.getElementById("additional_sheila");
+    const sheilaMeterField = document.getElementById("sheila_meter_field");
+    const sheilaMeterInput = document.getElementById("sheila_meter");
+    
+    addSheilaSelect.addEventListener('change', function(){
+      if(this.value==="YES"){
+        sheilaMeterField.classList.remove("hidden");
+        sheilaMeterInput.setAttribute('required','required');
+      } else {
+        sheilaMeterField.classList.add("hidden");
+        sheilaMeterInput.removeAttribute('required');
+        sheilaMeterInput.value="";
+      }
+    });
+
+    function updateSizeColorFieldsAndShawlNote(changedSelect) {
+      const rowIndex = changedSelect.getAttribute('data-row-index');
+      const pid = changedSelect.value;
+      const sizeContainer = document.getElementById(`size_field_${rowIndex}`);
+      const colorContainer = document.getElementById(`color_field_${rowIndex}`);
+      const shawlContainer = document.getElementById(`shawl_note_${rowIndex}`);
+      
+      if(!sizeContainer || !colorContainer || !shawlContainer) return;
+      
+      sizeContainer.innerHTML = '';
+      colorContainer.innerHTML = '';
+      shawlContainer.innerHTML = '';
+      
+      if(pid && pid !== '') {
+        sizeContainer.innerHTML = `
+          <div class="size-field-wrapper">
+            <label class="size-field-label" for="abaya_size_${rowIndex}">Abaya Size</label>
+            <select name="abaya_size_${rowIndex}" id="abaya_size_${rowIndex}" class="abaya-size-select" required data-row-index="${rowIndex}">
+              <option value="">Select Size</option>
+              <option value="52">52</option>
+              <option value="54">54</option>
+              <option value="56">56</option>
+              <option value="58">58</option>
+              <option value="60">60</option>
+              <option value="custom">Custom Size</option>
+            </select>
+            <div class="custom-size-field hidden" id="custom_size_field_${rowIndex}">
+              <input type="text" name="custom_size_${rowIndex}" id="custom_size_${rowIndex}" placeholder="e.g., 53.5 or other details">
+            </div>
+          </div>
+        `;
+
+        const sizeSelect = document.getElementById(`abaya_size_${rowIndex}`);
+        const customSizeField = document.getElementById(`custom_size_field_${rowIndex}`);
+        const customSizeInput = document.getElementById(`custom_size_${rowIndex}`);
+        
+        sizeSelect.addEventListener('change', function() {
+          if(this.value === 'custom') {
+            customSizeField.classList.remove('hidden');
+            customSizeInput.setAttribute('required', 'required');
+          } else {
+            customSizeField.classList.add('hidden');
+            customSizeInput.removeAttribute('required');
+            customSizeInput.value = '';
+          }
+        });
+      }
+      
+      if(["P01","P02","P03","P04"].includes(pid)) {
+        shawlContainer.innerHTML = '<div class="shawl-note">Short shawl included</div>';
+      }
+      
+      if(pid === "P04") {
+        colorContainer.innerHTML = `
+          <div class="color-field-wrapper">
+            <label class="color-field-label" for="hala_color_${rowIndex}">Choose Color</label>
+            <select name="hala_color_${rowIndex}" id="hala_color_${rowIndex}" class="hala-color-select" required>
+              <option value="">Select Color</option>
+              <option value="Light Rose Mauve">Light Rose Mauve</option>
+              <option value="Grey">Grey</option>
+              <option value="White">White</option>
+            </select>
+          </div>
+        `;
+      }
+      
+      if(["P05","P06","P07","P08","P09","P10"].includes(pid)) {
+        colorContainer.innerHTML = `
+          <div class="color-field-wrapper">
+            <label class="color-field-label" for="custom_color_${rowIndex}">Preferred Color</label>
+            <input type="text" name="custom_color_${rowIndex}" id="custom_color_${rowIndex}" placeholder="Enter your preferred color" required>
+          </div>
+        `;
+      }
+    }
+
+    productSection.addEventListener('change', function(e){
+      if(!e.target.classList.contains("pid")) return;
+      updateSizeColorFieldsAndShawlNote(e.target);
+    });
+
+    const prices = {
+      UAE:{P01:110,P02:110,P03:110,P04:130,P05:200,P06:190,P07:260,P08:170,P09:190,P10:190,P11:120,P12:150,P13:120,P14:160,P15:110,P16:150,P17:170,P18:165,P19:110},
+      India:{P01:2650,P02:2650,P03:2650,P04:3130,P05:4800,P06:4630,P07:6240,P08:4090,P09:4570,P10:4570,P11:2890,P12:3610,P13:2890,P14:3870,P15:2650,P16:3610,P17:4090,P18:3970,P19:2660}
+    };
+
+    const previewBtn = document.getElementById("previewBtn");
+    const receiptBox = document.getElementById("receipt");
+    const receiptDetails = document.getElementById("receiptDetails");
+    const paymentInfo = document.getElementById("paymentInfo");
+    const paymentDetails = document.getElementById("paymentDetails");
+
+    previewBtn.addEventListener("click", function(){
+      const country = countrySelect.value;
+      if(!country){ alert("Please select country"); return; }
+      const currencySymbol = country === 'UAE' ? 'AED' : '₹';
+
+      let subtotal = 0;
+      let productCount = 0;
+      let detailsHTML = "<table><tr><th>Product</th><th>Qty</th><th>Unit Price</th><th>Total</th></tr>";
+
+      document.querySelectorAll(".product-row").forEach(row=>{
+        const pid = row.querySelector(".pid").value;
+        const qty = parseInt(row.querySelector(".quantity").value)||0;
+        if(pid && qty>0){
+          productCount++;
+          const price = prices[country][pid] || 0;
+          const rowTotal = price * qty;
+          subtotal += rowTotal;
+          detailsHTML += `<tr><td>${pid}</td><td>${qty}</td><td>${currencySymbol} ${price}</td><td>${currencySymbol} ${rowTotal}</td></tr>`;
+        }
+      });
+
+      if(addSheilaSelect.value==="YES"){
+        const sheilaMeter = parseFloat(sheilaMeterInput.value)||0;
+        if(sheilaMeter>2){
+          const extraLength = sheilaMeter - 2;
+          const ratePer025m = country==="UAE"?5:120;
+          const extraUnits = extraLength / 0.25;
+          const sheilaCost = Math.ceil(extraUnits) * ratePer025m;
+          subtotal += sheilaCost;
+          detailsHTML += `<tr><td>Additional Sheila (${sheilaMeter}m)</td><td>1</td><td>${currencySymbol} ${sheilaCost}</td><td>${currencySymbol} ${sheilaCost}</td></tr>`;
+        }
+      }
+
+      detailsHTML += `<tr style="background: #F5EDE3;"><td colspan="3"><b>Subtotal</b></td><td><b>${currencySymbol} ${subtotal}</b></td></tr>`;
+      
+      let discount = 0;
+      let discountPercentage = 0;
+      
+      if(productCount >4) {
+        discountPercentage = 15;
+        discount = Math.round(subtotal * 0.15);
+      } else if(productCount >2) {
+        discountPercentage = 10;
+        discount = Math.round(subtotal * 0.10);
+      }
+
+      let total = subtotal - discount;
+
+      if(discount > 0) {
+        detailsHTML += `<tr style="background: #FFF9F0; border-left: 3px solid #8F826B;"><td colspan="3"><b>Multi-Product Discount (${discountPercentage}%)</b></td><td><b>-${currencySymbol} ${discount}</b></td></tr>`;
+      }
+
+      let shipping = 0;
+      let freeShipping = false;
+      
+      if(country === "UAE") {
+        if(total >= 330) {
+          freeShipping = true;
+        } else {
+          shipping = 30;
+        }
+      } else if(country === "India") {
+        if(total >= 8000) {
+          freeShipping = true;
+        } else {
+          shipping = fastDeliverySelect.value === "YES" ? 550 : 450;
+        }
+      }
+
+      total += shipping;
+
+      if(freeShipping) {
+        detailsHTML += `<tr style="background: #FFF9F0; border-left: 3px solid #8F826B;"><td colspan="3"><b>Shipping</b></td><td><b>FREE ✓</b></td></tr>`;
+      } else {
+        detailsHTML += `<tr><td colspan="3">Shipping</td><td>${currencySymbol} ${shipping}</td></tr>`;
+      }
+
+      detailsHTML += `<tr style="background: #8F826B; color: white;"><td colspan="3"><b>Grand Total</b></td><td><b>${currencySymbol} ${total}</b></td></tr></table>`;
+      
+      if(discount > 0 || freeShipping) {
+        detailsHTML += '<div style="margin-top: 15px;">';
+        if(discount > 0) {
+          detailsHTML += `<div class="discount-badge">You saved ${currencySymbol} ${discount} with ${discountPercentage}% multi-product discount!</div>`;
+        }
+        if(freeShipping) {
+          detailsHTML += '<div class="free-shipping-badge">Free Shipping Applied!</div>';
+        }
+        detailsHTML += '</div>';
+      }
+
+      calculatedTotal = total;
+      receiptDetails.innerHTML = detailsHTML;
+
+      let paymentHTML = '';
+      if(country === "India") {
+        paymentHTML = `
+          <div class="payment-detail">
+            <span class="payment-detail-label">Payment Method:</span>
+            <span class="payment-detail-value">GPay</span>
+          </div>
+          <div class="payment-detail">
+            <span class="payment-detail-label">GPay Number:</span>
+            <span class="payment-detail-value">6235091823</span>
+          </div>
+        `;
+      } else if(country === "UAE") {
+        paymentHTML = `
+          <div class="payment-detail">
+            <span class="payment-detail-label">Account Holder Name:</span>
+            <span class="payment-detail-value">ARZAH ASHRAF</span>
+          </div>
+          <div class="payment-detail">
+            <span class="payment-detail-label">IBAN Number:</span>
+            <span class="payment-detail-value">AE760240001580293623601</span>
+          </div>
+          <div class="payment-detail">
+            <span class="payment-detail-label">Account Number:</span>
+            <span class="payment-detail-value">001580293623601</span>
+          </div>
+          <div class="payment-detail">
+            <span class="payment-detail-label">Bank:</span>
+            <span class="payment-detail-value">Dubai Islamic Bank</span>
+          </div>
+        `;
+      }
+
+      paymentDetails.innerHTML = paymentHTML;
+      receiptBox.classList.remove("hidden");
+      
+      const fileInput = document.getElementById("paymentScreenshot");
+      const filePreview = document.getElementById("filePreview");
+      fileInput.value = "";
+      filePreview.classList.remove("active");
+      
+      captureFormSnapshot();
+      receiptGenerated = true;
+      hideWarning();
+    });
+
+    const fileInput = document.getElementById("paymentScreenshot");
+    const filePreview = document.getElementById("filePreview");
+    const fileName = document.getElementById("fileName");
+    const fileSize = document.getElementById("fileSize");
+    const removeFileBtn = document.getElementById("removeFileBtn");
+    const proceedBtn = document.getElementById("proceedBtn");
+
+    fileInput.addEventListener("change", function(e) {
+      const file = e.target.files[0];
+      
+      if (file) {
+        if (file.size > 5 * 1024 * 1024) {
+          alert("File size must be less than 5MB");
+          fileInput.value = "";
+          return;
+        }
+        
+        fileName.textContent = file.name;
+        fileSize.textContent = formatFileSize(file.size);
+        filePreview.classList.add("active");
+        
+        if (!hasFormChanged()) {
+          document.getElementById('submitOrderBtn').disabled = false;
+        }
+      }
+    });
+
+    removeFileBtn.addEventListener("click", function() {
+      fileInput.value = "";
+      filePreview.classList.remove("active");
+      document.getElementById('submitOrderBtn').disabled = true;
+    });
+
+    function formatFileSize(bytes) {
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(2) + ' KB';
+      return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+    }
+
+    proceedBtn.addEventListener("click", function(e) {
+      e.preventDefault();
+      if (hasFormChanged()) {
+        alert("Please click 'Preview Receipt' again to update your order details before proceeding.");
+        return false;
+      }
+      showConfirmationModal();
+    });
+
+    function showConfirmationModal() {
+      const form = document.getElementById('orderForm');
+      const formData = new FormData(form);
+      
+      const customerHTML = `
+        <div class="modal-detail-row">
+          <span class="modal-detail-label">Name:</span>
+          <span class="modal-detail-value">${formData.get('full_name')}</span>
+        </div>
+        <div class="modal-detail-row">
+          <span class="modal-detail-label">Email:</span>
+          <span class="modal-detail-value">${formData.get('email')}</span>
+        </div>
+        <div class="modal-detail-row">
+          <span class="modal-detail-label">Instagram:</span>
+          <span class="modal-detail-value">${formData.get('insta_username')}</span>
+        </div>
+        <div class="modal-detail-row">
+          <span class="modal-detail-label">Contact:</span>
+          <span class="modal-detail-value">${formData.get('contact_number')}</span>
+        </div>
+      `;
+      document.getElementById('modalCustomerDetails').innerHTML = customerHTML;
+
+      const pids = formData.getAll('pid[]');
+      const quantities = formData.getAll('quantity[]');
+      let productTableHTML = '<tr><th>Product</th><th>Size</th><th>Qty</th></tr>';
+      
+      pids.forEach((pid, index) => {
+        if(pid) {
+          const qty = quantities[index] || 1;
+          const sizeFieldName = `abaya_size_${index}`;
+          const size = formData.get(sizeFieldName) || 'N/A';
+          const customSizeFieldName = `custom_size_${index}`;
+          const customSize = formData.get(customSizeFieldName);
+          
+          const displaySize = size === 'custom' && customSize ? customSize : size;
+          
+          productTableHTML += `<tr><td>${pid}</td><td>${displaySize}</td><td>${qty}</td></tr>`;
+        }
+      });
+      
+      if(formData.get('Additional_Requirements')) {
+        productTableHTML += `<tr><td colspan="3"><strong>Requirements:</strong> ${formData.get('Additional_Requirements')}</td></tr>`;
+      }
+      
+      if(formData.get('additional_sheila') === 'YES') {
+        productTableHTML += `<tr><td colspan="3"><strong>Additional Sheila:</strong> ${formData.get('sheila_meter')}m</td></tr>`;
+      }
+      
+      document.getElementById('modalProductTable').innerHTML = productTableHTML;
+
+      const country = formData.get('country');
+      let addressHTML = '';
+      
+      if(country === 'UAE') {
+        addressHTML = `
+          <div class="modal-detail-row">
+            <span class="modal-detail-label">Apartment Number:</span>
+            <span class="modal-detail-value">${formData.get('apartment_number')}</span>
+          </div>
+          <div class="modal-detail-row">
+            <span class="modal-detail-label">House/Building Name:</span>
+            <span class="modal-detail-value">${formData.get('house_name')}</span>
+          </div>
+          <div class="modal-detail-row">
+            <span class="modal-detail-label">Street:</span>
+            <span class="modal-detail-value">${formData.get('street_name_uae')}</span>
+          </div>
+          <div class="modal-detail-row">
+            <span class="modal-detail-label">Landmark:</span>
+            <span class="modal-detail-value">${formData.get('landmark')}</span>
+          </div>
+          <div class="modal-detail-row">
+            <span class="modal-detail-label">Area:</span>
+            <span class="modal-detail-value">${formData.get('area_name')}</span>
+          </div>
+          <div class="modal-detail-row">
+            <span class="modal-detail-label">Emirate:</span>
+            <span class="modal-detail-value">${formData.get('emirate')}</span>
+          </div>
+          <div class="modal-detail-row">
+            <span class="modal-detail-label">Country:</span>
+            <span class="modal-detail-value">${country}</span>
+          </div>
+        `;
+      } else if(country === 'India') {
+        addressHTML = `
+          <div class="modal-detail-row">
+            <span class="modal-detail-label">House:</span>
+            <span class="modal-detail-value">${formData.get('house')}</span>
+          </div>
+          <div class="modal-detail-row">
+            <span class="modal-detail-label">Street:</span>
+            <span class="modal-detail-value">${formData.get('street_name')}</span>
+          </div>
+          <div class="modal-detail-row">
+            <span class="modal-detail-label">City:</span>
+            <span class="modal-detail-value">${formData.get('city')}</span>
+          </div>
+          <div class="modal-detail-row">
+            <span class="modal-detail-label">District:</span>
+            <span class="modal-detail-value">${formData.get('district')}</span>
+          </div>
+          <div class="modal-detail-row">
+            <span class="modal-detail-label">Pincode:</span>
+            <span class="modal-detail-value">${formData.get('pincode')}</span>
+          </div>
+          <div class="modal-detail-row">
+            <span class="modal-detail-label">Country:</span>
+            <span class="modal-detail-value">${country}</span>
+          </div>
+        `;
+      }
+      
+      document.getElementById('modalAddress').innerHTML = addressHTML;
+
+      document.getElementById('modalSummaryTable').innerHTML = document.querySelector('#receiptDetails table').innerHTML;
+      
+      const currencySymbol = country === 'UAE' ? 'AED' : '₹';
+      document.getElementById('modalGrandTotal').textContent = `${currencySymbol} ${calculatedTotal}`;
+
+      document.getElementById('confirmModal').classList.add('active');
+    }
+
+    document.getElementById('modalCancelBtn').addEventListener('click', function() {
+      document.getElementById('confirmModal').classList.remove('active');
+    });
+
+    document.getElementById('confirmOrderBtn').addEventListener('click', function() {
+      document.getElementById('confirmModal').classList.remove('active');
+  
+      document.getElementById('paymentInfo').classList.remove('hidden');
+  
+      document.getElementById('paymentInfo').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  
+      document.getElementById('proceedBtn').style.display = 'none';
+    });
+
+    document.getElementById('submitOrderBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+  
+      const fileInput = document.getElementById('paymentScreenshot');
+      if (!fileInput.files || fileInput.files.length === 0) {
+        alert("Please upload payment screenshot before submitting");
+        return;
+      }
+  
+      if (hasFormChanged()) {
+        alert("Form has been modified. Please preview receipt again.");
+        return;
+      }
+  
+      document.getElementById('orderForm').submit();
+    });
+
+    document.getElementById("cancelBtn").addEventListener("click", ()=>{
+      receiptBox.classList.add("hidden");
+      document.getElementById('paymentInfo').classList.add("hidden");
+      document.getElementById('proceedBtn').style.display = 'block';
+      fileInput.value = "";
+      filePreview.classList.remove("active");
+      receiptGenerated = false;
+      formSnapshot = null;
+      hideWarning();
+    });
+  </script>
+</body>
+</html>
