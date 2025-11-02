@@ -580,7 +580,7 @@
     }
 
     .color-field-label::before {
-      content: '🎨';
+      content: '';
       font-size: 14px;
     }
     
@@ -618,7 +618,7 @@
     }
 
     .size-field-label::before {
-      content: '📏';
+      content: '';
       font-size: 14px;
     }
 
@@ -1544,16 +1544,16 @@
               <option value="P08">P08 – Flow Pleat Abaya-Double Chiffon</option>
               <option value="P09">P09 – Flow Pleat Abaya-Nida</option>
               <option value="P10">P10 – Classic Red Abaya</option>
-              <option value="P10">P11 – Bronze Abaya</option>
-              <option value="P10">P12 – Asmirah</option>
-              <option value="P10">P13 – Sahar</option>
-              <option value="P10">P14 – Classy Dark Olive</option>
-              <option value="P10">P15 – Insha Abaya</option>
-              <option value="P10">P16 – Black Lace Abaya</option>
-              <option value="P10">P17 – Beige Coat Abaya</option>
-              <option value="P10">P18 – Rua Abaya</option>
-              <option value="P10">P19 – Ayra Abaya</option>
-              <option value="P10">P20 – Blossom abaya</option>
+              <option value="P11">P11 – Bronze Abaya</option>
+              <option value="P12">P12 – Asmirah</option>
+              <option value="P13">P13 – Sahar</option>
+              <option value="P14">P14 – Classy Dark Olive</option>
+              <option value="P15">P15 – Insha Abaya</option>
+              <option value="P16">P16 – Black Lace Abaya</option>
+              <option value="P17">P17 – Beige Coat Abaya</option>
+              <option value="P18">P18 – Rua Abaya</option>
+              <option value="P19">P19 – Ayra Abaya</option>
+              <option value="P20">P20 – Blossom abaya</option>
 
               <option value="custom">Custom Design</option>
             </select>
@@ -2022,9 +2022,19 @@
             <option value="P05">P05 – Launan Abaya</option>
             <option value="P06">P06 – Yasmin Abaya</option>
             <option value="P07">P07 – Cape Abaya</option>
-            <option value="P08">P08 – Flow Pleat Abaya</option>
-            <option value="P09">P09 – Flow Pleat Abaya</option>
+            <option value="P08">P08 – Flow Pleat Abaya-Double Chiffon</option>
+            <option value="P09">P09 – Flow Pleat Abaya-Nida</option>
             <option value="P10">P10 – Classic Red Abaya</option>
+            <option value="P11">P11 – Bronze Abaya</option>
+            <option value="P12">P12 – Asmirah</option>
+            <option value="P13">P13 – Sahar</option>
+            <option value="P14">P14 – Classy Dark Olive</option>
+            <option value="P15">P15 – Insha Abaya</option>
+            <option value="P16">P16 – Black Lace Abaya</option>
+            <option value="P17">P17 – Beige Coat Abaya</option>
+            <option value="P18">P18 – Rua Abaya</option>
+            <option value="P19">P19 – Ayra Abaya</option>
+            <option value="P20">P20 – Blossom abaya</option>
             <option value="custom">Custom Design</option>
           </select>
           <input type="number" name="quantity[]" class="quantity" min="1" value="1" placeholder="Qty" required>
@@ -2154,6 +2164,7 @@
       shawlContainer.innerHTML = '';
       
       if(pid && pid !== '') {
+        // Add size field with only standard sizes (no custom option)
         sizeContainer.innerHTML = `
           <div class="size-field-wrapper">
             <label class="size-field-label" for="abaya_size_${rowIndex}">Abaya Size</label>
@@ -2164,34 +2175,17 @@
               <option value="56">56</option>
               <option value="58">58</option>
               <option value="60">60</option>
-              <option value="custom">Custom Size</option>
             </select>
-            <div class="custom-size-field hidden" id="custom_size_field_${rowIndex}">
-              <input type="text" name="custom_size_${rowIndex}" id="custom_size_${rowIndex}" placeholder="e.g., 53.5 or other details">
-            </div>
           </div>
         `;
-
-        const sizeSelect = document.getElementById(`abaya_size_${rowIndex}`);
-        const customSizeField = document.getElementById(`custom_size_field_${rowIndex}`);
-        const customSizeInput = document.getElementById(`custom_size_${rowIndex}`);
-        
-        sizeSelect.addEventListener('change', function() {
-          if(this.value === 'custom') {
-            customSizeField.classList.remove('hidden');
-            customSizeInput.setAttribute('required', 'required');
-          } else {
-            customSizeField.classList.add('hidden');
-            customSizeInput.removeAttribute('required');
-            customSizeInput.value = '';
-          }
-        });
       }
       
+      // Show shawl note for P01-P04
       if(["P01","P02","P03","P04"].includes(pid)) {
         shawlContainer.innerHTML = '<div class="shawl-note">Short shawl included</div>';
       }
       
+      // Color dropdown only for P04 (Hala Abaya)
       if(pid === "P04") {
         colorContainer.innerHTML = `
           <div class="color-field-wrapper">
@@ -2206,14 +2200,22 @@
         `;
       }
       
-      if(["P05","P06","P07","P08","P09","P10","P11","P12","P13","P14","P15","P16","P17","P18","P19","P20"].includes(pid)) {
+      // Color dropdown only for P18 (Rua Abaya) with Maroon, Beige, Black
+      if(pid === "P18") {
         colorContainer.innerHTML = `
           <div class="color-field-wrapper">
-            <label class="color-field-label" for="custom_color_${rowIndex}">Preferred Color</label>
-            <input type="text" name="custom_color_${rowIndex}" id="custom_color_${rowIndex}" placeholder="Enter your preferred color" required>
+            <label class="color-field-label" for="rua_color_${rowIndex}">Choose Color</label>
+            <select name="rua_color_${rowIndex}" id="rua_color_${rowIndex}" class="rua-color-select" required>
+              <option value="">Select Color</option>
+              <option value="Maroon">Maroon</option>
+              <option value="Beige">Beige</option>
+              <option value="Black">Black</option>
+            </select>
           </div>
         `;
       }
+      
+      // No color field for P05-P17, P19-P20 (removed preferred color)
     }
 
     productSection.addEventListener('change', function(e){
@@ -2452,12 +2454,8 @@
           const qty = quantities[index] || 1;
           const sizeFieldName = `abaya_size_${index}`;
           const size = formData.get(sizeFieldName) || 'N/A';
-          const customSizeFieldName = `custom_size_${index}`;
-          const customSize = formData.get(customSizeFieldName);
           
-          const displaySize = size === 'custom' && customSize ? customSize : size;
-          
-          productTableHTML += `<tr><td>${pid}</td><td>${displaySize}</td><td>${qty}</td></tr>`;
+          productTableHTML += `<tr><td>${pid}</td><td>${size}</td><td>${qty}</td></tr>`;
         }
       });
       
@@ -2518,6 +2516,7 @@
           <div class="modal-detail-row">
             <span class="modal-detail-label">City:</span>
             <span class="modal-detail-value">${formData.get('city')}</span>
+            
           </div>
           <div class="modal-detail-row">
             <span class="modal-detail-label">District:</span>
