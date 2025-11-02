@@ -1554,7 +1554,6 @@
               <option value="P18">P18 – Rua Abaya</option>
               <option value="P19">P19 – Ayra Abaya</option>
               <option value="P20">P20 – Blossom abaya</option>
-
               <option value="custom">Custom Design</option>
             </select>
             <input type="number" name="quantity[]" class="quantity" min="1" value="1" placeholder="Qty" required>
@@ -2164,8 +2163,10 @@
       shawlContainer.innerHTML = '';
       
       if(pid && pid !== '') {
-        // Add size field with only standard sizes (no custom option)
-        sizeContainer.innerHTML = `
+        // Size field - NO custom size option for P11-P20
+        const hasCustomSize = !['P11','P12','P13','P14','P15','P16','P17','P18','P19','P20'].includes(pid);
+        
+        let sizeHTML = `
           <div class="size-field-wrapper">
             <label class="size-field-label" for="abaya_size_${rowIndex}">Abaya Size</label>
             <select name="abaya_size_${rowIndex}" id="abaya_size_${rowIndex}" class="abaya-size-select" required data-row-index="${rowIndex}">
@@ -2174,18 +2175,48 @@
               <option value="54">54</option>
               <option value="56">56</option>
               <option value="58">58</option>
-              <option value="60">60</option>
-            </select>
-          </div>
-        `;
+              <option value="60">60</option>`;
+        
+        if(hasCustomSize) {
+          sizeHTML += `<option value="custom">Custom Size</option>`;
+        }
+        
+        sizeHTML += `</select>`;
+        
+        if(hasCustomSize) {
+          sizeHTML += `
+            <div class="custom-size-field hidden" id="custom_size_field_${rowIndex}">
+              <input type="text" name="custom_size_${rowIndex}" id="custom_size_${rowIndex}" placeholder="e.g., 53.5 or other details">
+            </div>`;
+        }
+        
+        sizeHTML += `</div>`;
+        sizeContainer.innerHTML = sizeHTML;
+
+        if(hasCustomSize) {
+          const sizeSelect = document.getElementById(`abaya_size_${rowIndex}`);
+          const customSizeField = document.getElementById(`custom_size_field_${rowIndex}`);
+          const customSizeInput = document.getElementById(`custom_size_${rowIndex}`);
+          
+          sizeSelect.addEventListener('change', function() {
+            if(this.value === 'custom') {
+              customSizeField.classList.remove('hidden');
+              customSizeInput.setAttribute('required', 'required');
+            } else {
+              customSizeField.classList.add('hidden');
+              customSizeInput.removeAttribute('required');
+              customSizeInput.value = '';
+            }
+          });
+        }
       }
       
-      // Show shawl note for P01-P04
+      // Short shawl note for P01-P04
       if(["P01","P02","P03","P04"].includes(pid)) {
         shawlContainer.innerHTML = '<div class="shawl-note">Short shawl included</div>';
       }
       
-      // Color dropdown only for P04 (Hala Abaya)
+      // Color field for P04 (Hala Abaya)
       if(pid === "P04") {
         colorContainer.innerHTML = `
           <div class="color-field-wrapper">
@@ -2200,12 +2231,22 @@
         `;
       }
       
-      // Color dropdown only for P18 (Rua Abaya) with Maroon, Beige, Black
+      // Preferred color input for P05-P10 ONLY (removed for P11-P20)
+      if(["P05","P06","P07","P08","P09","P10"].includes(pid)) {
+        colorContainer.innerHTML = `
+          <div class="color-field-wrapper">
+            <label class="color-field-label" for="custom_color_${rowIndex}">Preferred Color</label>
+            <input type="text" name="custom_color_${rowIndex}" id="custom_color_${rowIndex}" placeholder="Enter your preferred color" required>
+          </div>
+        `;
+      }
+      
+      // Color dropdown for P18 (Rua Abaya)
       if(pid === "P18") {
         colorContainer.innerHTML = `
           <div class="color-field-wrapper">
-            <label class="color-field-label" for="rua_color_${rowIndex}">Choose Color</label>
-            <select name="rua_color_${rowIndex}" id="rua_color_${rowIndex}" class="rua-color-select" required>
+            <label class="color-field-label" for="p18_color_${rowIndex}">Choose Color</label>
+            <select name="p18_color_${rowIndex}" id="p18_color_${rowIndex}" class="p18-color-select" required>
               <option value="">Select Color</option>
               <option value="Maroon">Maroon</option>
               <option value="Beige">Beige</option>
@@ -2214,8 +2255,6 @@
           </div>
         `;
       }
-      
-      // No color field for P05-P17, P19-P20 (removed preferred color)
     }
 
     productSection.addEventListener('change', function(e){
@@ -2305,11 +2344,13 @@
 
       total += shipping;
 
-      if(freeShipping) {
-        detailsHTML += `<tr style="background: #FFF9F0; border-left: 3px solid #8F826B;"><td colspan="3"><b>Shipping</b></td><td><b>FREE ✓</b></td></tr>`;
-      } else {
-        detailsHTML += `<tr><td colspan="3">Shipping</td><td>${currencySymbol} ${shipping}</td></tr>`;
-      }
+      const shippingLabel = country === "UAE" ? "Delivery" : "Shipping";
+
+if(freeShipping) {
+  detailsHTML += `<tr style="background: #FFF9F0; border-left: 3px solid #8F826B;"><td colspan="3"><b>${shippingLabel}</b></td><td><b>FREE ✓</b></td></tr>`;
+} else {
+  detailsHTML += `<tr><td colspan="3">${shippingLabel}</td><td>${currencySymbol} ${shipping}</td></tr>`;
+}
 
       detailsHTML += `<tr style="background: #8F826B; color: white;"><td colspan="3"><b>Grand Total</b></td><td><b>${currencySymbol} ${total}</b></td></tr></table>`;
       
@@ -2454,8 +2495,12 @@
           const qty = quantities[index] || 1;
           const sizeFieldName = `abaya_size_${index}`;
           const size = formData.get(sizeFieldName) || 'N/A';
+          const customSizeFieldName = `custom_size_${index}`;
+          const customSize = formData.get(customSizeFieldName);
           
-          productTableHTML += `<tr><td>${pid}</td><td>${size}</td><td>${qty}</td></tr>`;
+          const displaySize = size === 'custom' && customSize ? customSize : size;
+          
+          productTableHTML += `<tr><td>${pid}</td><td>${displaySize}</td><td>${qty}</td></tr>`;
         }
       });
       
@@ -2516,7 +2561,6 @@
           <div class="modal-detail-row">
             <span class="modal-detail-label">City:</span>
             <span class="modal-detail-value">${formData.get('city')}</span>
-            
           </div>
           <div class="modal-detail-row">
             <span class="modal-detail-label">District:</span>
