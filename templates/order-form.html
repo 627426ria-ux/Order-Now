@@ -1552,7 +1552,9 @@
               <option value="P10">P16 – Black Lace Abaya</option>
               <option value="P10">P17 – Beige Coat Abaya</option>
               <option value="P10">P18 – Rua Abaya</option>
-              <option value="P10">P19 – Ayra</option>
+              <option value="P10">P19 – Ayra Abaya</option>
+              <option value="P10">P20 – Blossom abaya</option>
+
               <option value="custom">Custom Design</option>
             </select>
             <input type="number" name="quantity[]" class="quantity" min="1" value="1" placeholder="Qty" required>
@@ -2204,7 +2206,7 @@
         `;
       }
       
-      if(["P05","P06","P07","P08","P09","P10"].includes(pid)) {
+      if(["P05","P06","P07","P08","P09","P10","P11","P12","P13","P14","P15","P16","P17","P18","P19","P20"].includes(pid)) {
         colorContainer.innerHTML = `
           <div class="color-field-wrapper">
             <label class="color-field-label" for="custom_color_${rowIndex}">Preferred Color</label>
@@ -2220,8 +2222,8 @@
     });
 
     const prices = {
-      UAE:{P01:110,P02:110,P03:110,P04:130,P05:200,P06:190,P07:260,P08:170,P09:190,P10:190,P11:120,P12:150,P13:120,P14:160,P15:110,P16:150,P17:170,P18:165,P19:110},
-      India:{P01:2650,P02:2650,P03:2650,P04:3130,P05:4800,P06:4630,P07:6240,P08:4090,P09:4570,P10:4570,P11:2890,P12:3610,P13:2890,P14:3870,P15:2650,P16:3610,P17:4090,P18:3970,P19:2660}
+      UAE:{P01:110,P02:110,P03:110,P04:130,P05:200,P06:190,P07:260,P08:170,P09:190,P10:190,P11:120,P12:150,P13:120,P14:160,P15:110,P16:150,P17:170,P18:165,P19:110,P20:110},
+      India:{P01:2650,P02:2650,P03:2650,P04:3130,P05:4800,P06:4630,P07:6240,P08:4090,P09:4570,P10:4570,P11:2890,P12:3610,P13:2890,P14:3870,P15:2650,P16:3610,P17:4090,P18:3970,P19:2660,P20:2660}
     };
 
     const previewBtn = document.getElementById("previewBtn");
