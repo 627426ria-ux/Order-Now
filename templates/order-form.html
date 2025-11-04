@@ -1627,16 +1627,17 @@
               <option value="P18">P18 – Rua Abaya</option>
               <option value="P19">P19 – Ayra Abaya</option>
               <option value="P20">P20 – Blossom abaya</option>
-              <option value="custom">Custom Design</option>
             </select>
             <input type="number" name="quantity[]" class="quantity" min="1" value="1" placeholder="Qty" required>
           </div>
           <div class="size-field-container" id="size_field_0"></div>
           <div class="color-field-container" id="color_field_0"></div>
           <div class="shawl-length-container" id="shawl_length_0"></div>
-            <div class="shawl-note-container" id="shawl_note_0"></div>
+          <div class="shawl-note-container" id="shawl_note_0"></div>
+        </div>
+        <button type="button" id="addProductBtn">Add Another Product</button>
       </div>
-      <button type="button" id="addProductBtn">Add Another Product</button>
+     
 
       <div class="form-group">
         <label for="Additional_Requirements">
@@ -2107,18 +2108,18 @@
             <option value="P18">P18 – Rua Abaya</option>
             <option value="P19">P19 – Ayra Abaya</option>
             <option value="P20">P20 – Blossom abaya</option>
-            <option value="custom">Custom Design</option>
+            
           </select>
           <input type="number" name="quantity[]" class="quantity" min="1" value="1" placeholder="Qty" required>
           <button type="button" class="remove-product-btn">×</button>
         </div>
         <div class="size-field-container" id="size_field_${rowCounter}"></div>
-    <div class="color-field-container" id="color_field_${rowCounter}"></div>
-    <div class="shawl-length-container" id="shawl_length_${rowCounter}"></div>  ← ADD THIS LINE
-    <div class="shawl-note-container" id="shawl_note_${rowCounter}"></div>
+        <div class="color-field-container" id="color_field_${rowCounter}"></div>
+        <div class="shawl-length-container" id="shawl_length_${rowCounter}"></div>  
+        <div class="shawl-note-container" id="shawl_note_${rowCounter}"></div>
       `;
-      productSection.appendChild(newWrapper);
-      
+      productSection.insertBefore(newWrapper, addProductBtn);
+
       const removeBtn = newWrapper.querySelector('.remove-product-btn');
       removeBtn.addEventListener('click', function(){
         newWrapper.remove();
@@ -2305,9 +2306,12 @@ if(["P13","P14","P16","P17","P18"].includes(pid)) {
   `;
 }
       // Short shawl note for P01-P04
-      if(["P01","P02","P03","P04","P11","P12","P15","P19","P20"].includes(pid)) {
+      if(["P01","P02","P03","P04","P11","P15","P19","P20"].includes(pid)) {
         shawlContainer.innerHTML = '<div class="shawl-note">Short shawl included</div>';
       }
+      if(pid === "P12") {
+        shawlContainer.innerHTML = '<div class="shawl-note">2m shawl included</div>';
+      } 
       
       // Color field for P04 (Hala Abaya)
       if(pid === "P04") {
