@@ -662,6 +662,79 @@
       left: 10px;
       font-style: normal;
     }
+    /* NEW: Shawl length upgrade field */
+.shawl-length-wrapper {
+  margin-top: 12px;
+  width: 100%;
+}
+
+.shawl-length-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #61664E;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.shawl-length-label::before {
+  content: '🧣';
+  font-size: 14px;
+}
+
+.shawl-checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 15px;
+  background: white;
+  border: 1px solid #D4C5B0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.shawl-checkbox-container:hover {
+  border-color: #8F826B;
+  background: #FEFDFB;
+}
+
+.shawl-checkbox-container input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #8F826B;
+}
+
+.shawl-checkbox-label {
+  font-size: 13px;
+  color: #2C2923;
+  font-weight: 500;
+  cursor: pointer;
+  flex: 1;
+  font-family: 'Playfair Display', serif;
+}
+
+.shawl-upgrade-note {
+  font-size: 11px;
+  color: #8F826B;
+  margin-top: 6px;
+  font-style: italic;
+  padding: 4px 8px 4px 26px;
+  background: #FFF9F0;
+  border-left: 2px solid #8F826B;
+  border-radius: 3px;
+  position: relative;
+}
+
+.shawl-upgrade-note::before {
+  content: 'ℹ';
+  position: absolute;
+  left: 8px;
+  font-style: normal;
+  opacity: 0.8;
+}
     
     #addProductBtn {
       background: transparent;
@@ -1560,8 +1633,8 @@
           </div>
           <div class="size-field-container" id="size_field_0"></div>
           <div class="color-field-container" id="color_field_0"></div>
-          <div class="shawl-note-container" id="shawl_note_0"></div>
-        </div>
+          <div class="shawl-length-container" id="shawl_length_0"></div>
+            <div class="shawl-note-container" id="shawl_note_0"></div>
       </div>
       <button type="button" id="addProductBtn">Add Another Product</button>
 
@@ -2040,8 +2113,9 @@
           <button type="button" class="remove-product-btn">×</button>
         </div>
         <div class="size-field-container" id="size_field_${rowCounter}"></div>
-        <div class="color-field-container" id="color_field_${rowCounter}"></div>
-        <div class="shawl-note-container" id="shawl_note_${rowCounter}"></div>
+    <div class="color-field-container" id="color_field_${rowCounter}"></div>
+    <div class="shawl-length-container" id="shawl_length_${rowCounter}"></div>  ← ADD THIS LINE
+    <div class="shawl-note-container" id="shawl_note_${rowCounter}"></div>
       `;
       productSection.appendChild(newWrapper);
       
@@ -2148,18 +2222,19 @@
         sheilaMeterInput.value="";
       }
     });
-
     function updateSizeColorFieldsAndShawlNote(changedSelect) {
-      const rowIndex = changedSelect.getAttribute('data-row-index');
-      const pid = changedSelect.value;
-      const sizeContainer = document.getElementById(`size_field_${rowIndex}`);
-      const colorContainer = document.getElementById(`color_field_${rowIndex}`);
-      const shawlContainer = document.getElementById(`shawl_note_${rowIndex}`);
+  const rowIndex = changedSelect.getAttribute('data-row-index');
+  const pid = changedSelect.value;
+  const sizeContainer = document.getElementById(`size_field_${rowIndex}`);
+  const colorContainer = document.getElementById(`color_field_${rowIndex}`);
+  const shawlLengthContainer = document.getElementById(`shawl_length_${rowIndex}`);  
+  const shawlContainer = document.getElementById(`shawl_note_${rowIndex}`);
       
-      if(!sizeContainer || !colorContainer || !shawlContainer) return;
-      
+  if(!sizeContainer || !colorContainer || !shawlLengthContainer || !shawlContainer) return;
+
       sizeContainer.innerHTML = '';
       colorContainer.innerHTML = '';
+      shawlLengthContainer.innerHTML = '';  
       shawlContainer.innerHTML = '';
       
       if(pid && pid !== '') {
@@ -2211,8 +2286,26 @@
         }
       }
       
+  
+
+// NEW: Shawl length upgrade for P13, P14, P16, P17, P18 ONLY (NOT P12)
+// NEW: Shawl upgrade checkbox for P13, P14, P16, P17, P18 ONLY (NOT P12)
+if(["P13","P14","P16","P17","P18"].includes(pid)) {
+  shawlContainer.innerHTML = '<div class="shawl-note">Short shawl included</div>';
+  shawlLengthContainer.innerHTML = `
+    <div class="shawl-length-wrapper">
+      <div class="shawl-checkbox-container">
+        <input type="checkbox" name="shawl_upgrade_${rowIndex}" id="shawl_upgrade_${rowIndex}" value="2m">
+        <label for="shawl_upgrade_${rowIndex}" class="shawl-checkbox-label">
+          Add 2m Shawl Upgrade (+20 AED / +480 INR)
+        </label>
+      </div>
+      <div class="shawl-upgrade-note">Check this to upgrade to a 2m shawl for an additional charge of 20 AED (480 INR in India)</div>
+    </div>
+  `;
+}
       // Short shawl note for P01-P04
-      if(["P01","P02","P03","P04"].includes(pid)) {
+      if(["P01","P02","P03","P04","P11","P12","P15","P19","P20"].includes(pid)) {
         shawlContainer.innerHTML = '<div class="shawl-note">Short shawl included</div>';
       }
       
@@ -2266,6 +2359,10 @@
       UAE:{P01:110,P02:110,P03:110,P04:130,P05:200,P06:190,P07:260,P08:170,P09:190,P10:190,P11:120,P12:150,P13:120,P14:160,P15:110,P16:150,P17:170,P18:165,P19:110,P20:110},
       India:{P01:2650,P02:2650,P03:2650,P04:3130,P05:4800,P06:4630,P07:6240,P08:4090,P09:4570,P10:4570,P11:2890,P12:3610,P13:2890,P14:3870,P15:2650,P16:3610,P17:4090,P18:3970,P19:2660,P20:2660}
     };
+    const shawlUpgradeCharges = {
+  UAE: 20,
+  India: 480
+};
 
     const previewBtn = document.getElementById("previewBtn");
     const receiptBox = document.getElementById("receipt");
@@ -2282,17 +2379,33 @@
       let productCount = 0;
       let detailsHTML = "<table><tr><th>Product</th><th>Qty</th><th>Unit Price</th><th>Total</th></tr>";
 
-      document.querySelectorAll(".product-row").forEach(row=>{
-        const pid = row.querySelector(".pid").value;
-        const qty = parseInt(row.querySelector(".quantity").value)||0;
-        if(pid && qty>0){
-          productCount++;
-          const price = prices[country][pid] || 0;
-          const rowTotal = price * qty;
-          subtotal += rowTotal;
-          detailsHTML += `<tr><td>${pid}</td><td>${qty}</td><td>${currencySymbol} ${price}</td><td>${currencySymbol} ${rowTotal}</td></tr>`;
-        }
-      });
+        document.querySelectorAll(".product-row").forEach((row, index)=>{
+  const pid = row.querySelector(".pid").value;
+  const qty = parseInt(row.querySelector(".quantity").value)||0;
+  if(pid && qty>0){
+    productCount++;
+    const price = prices[country][pid] || 0;
+    let rowTotal = price * qty;
+    
+    // NEW: Check for 2m shawl upgrade for P13, P14, P16, P17, P18
+    // NEW: Check for 2m shawl upgrade checkbox for P13, P14, P16, P17, P18
+if(["P13","P14","P16","P17","P18"].includes(pid)) {
+  const shawlUpgradeCheckbox = document.getElementById(`shawl_upgrade_${index}`);
+  if(shawlUpgradeCheckbox && shawlUpgradeCheckbox.checked) {
+    const upgradeCharge = shawlUpgradeCharges[country] * qty;
+    rowTotal += upgradeCharge;
+    detailsHTML += `<tr><td>${pid}</td><td>${qty}</td><td>${currencySymbol} ${price}</td><td>${currencySymbol} ${price * qty}</td></tr>`;
+    detailsHTML += `<tr><td colspan="2">  └ 2m Shawl Upgrade</td><td>${currencySymbol} ${shawlUpgradeCharges[country]}</td><td>${currencySymbol} ${upgradeCharge}</td></tr>`;
+  } else {
+    detailsHTML += `<tr><td>${pid}</td><td>${qty}</td><td>${currencySymbol} ${price}</td><td>${currencySymbol} ${rowTotal}</td></tr>`;
+  }
+} else {
+  detailsHTML += `<tr><td>${pid}</td><td>${qty}</td><td>${currencySymbol} ${price}</td><td>${currencySymbol} ${rowTotal}</td></tr>`;
+}
+    
+    subtotal += rowTotal;
+  }
+});
 
       if(addSheilaSelect.value==="YES"){
         const sheilaMeter = parseFloat(sheilaMeterInput.value)||0;
