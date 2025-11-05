@@ -1650,31 +1650,33 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <label for="additional_sheila">
-          <span class="label-icon"></span>
-          Additional Sheila
-        </label>
-        <select id="additional_sheila" name="additional_sheila" required>
-          <option value="">YES/NO</option>
-          <option value="YES">YES</option>
-          <option value="NO">NO</option>
-        </select>
-        <div class="note">
-          Short shawl included. For Sheila above 2m, price increases by 5 AED per 0.25m in UAE (with corresponding price in India).
+      <div id="additionalSheilaSection" style="display: none;">
+        <div class="form-group">
+          <label for="additional_sheila">
+            <span class="label-icon"></span>
+            Additional Sheila
+          </label>
+          <select id="additional_sheila" name="additional_sheila" required>
+            <option value="">YES/NO</option>
+            <option value="YES">YES</option>
+            <option value="NO">NO</option>
+          </select>
+          <div class="note">
+            Short shawl included. For Sheila above 2m, price increases by 5 AED per 0.25m in UAE (with corresponding price in India).
+          </div>
         </div>
-      </div>
-
-      <div class="form-group hidden" id="sheila_meter_field">
-        <label for="sheila_meter">
-          <span class="label-icon"></span>
-          Additional Sheila Length (meters)
-        </label>
-        <div class="input-wrapper">
-          <input type="number" id="sheila_meter" name="sheila_meter" min="0.25" step="0.25" placeholder="Enter required meters">
-          <span class="input-icon"></span>
+  
+        <div class="form-group hidden" id="sheila_meter_field">
+          <label for="sheila_meter">
+            <span class="label-icon"></span>
+            Additional Sheila Length (meters)
+          </label>
+          <div class="input-wrapper">
+            <input type="number" id="sheila_meter" name="sheila_meter" min="0.25" step="0.25" placeholder="Enter required meters">
+            <span class="input-icon"></span>
+          </div>
         </div>
-      </div>
+  </div>
 
       <div class="form-group">
         <label for="country">
@@ -2123,10 +2125,12 @@
       const removeBtn = newWrapper.querySelector('.remove-product-btn');
       removeBtn.addEventListener('click', function(){
         newWrapper.remove();
+        checkSheilaEligibility();
         if(receiptGenerated) {
           showWarning();
         }
       });
+      checkSheilaEligibility(); 
     });
 
     function captureFormSnapshot() {
@@ -2200,6 +2204,33 @@
         showWarning();
       }
     });
+    // Function to check if Additional Sheila should be shown
+function checkSheilaEligibility() {
+  const productSelects = document.querySelectorAll('.pid');
+  let showSheila = false;
+  
+  productSelects.forEach(select => {
+    if (select.value) {
+      const productNumber = parseInt(select.value.replace('P', ''));
+      if (productNumber >= 5 && productNumber <= 10) {
+        showSheila = true;
+      }
+    }
+  });
+  
+  const sheilaSection = document.getElementById('additionalSheilaSection');
+  if (showSheila) {
+    sheilaSection.style.display = 'block';
+  } else {
+    sheilaSection.style.display = 'none';
+    // Reset selections when hidden
+    const addSheilaSelect = document.getElementById('additional_sheila');
+    addSheilaSelect.value = '';
+    const sheilaMeterField = document.getElementById('sheila_meter_field');
+    sheilaMeterField.classList.add('hidden');
+    document.getElementById('sheila_meter').value = '';
+  }
+}
 
     orderForm.addEventListener('input', function(e) {
       if (receiptGenerated && e.target.name !== 'payment_screenshot') {
@@ -2357,6 +2388,7 @@ if(["P13","P14","P16","P17","P18"].includes(pid)) {
     productSection.addEventListener('change', function(e){
       if(!e.target.classList.contains("pid")) return;
       updateSizeColorFieldsAndShawlNote(e.target);
+      checkSheilaEligibility();  // ← ADD THIS LINE
     });
 
     const prices = {
@@ -2744,7 +2776,11 @@ if(freeShipping) {
       receiptGenerated = false;
       formSnapshot = null;
       hideWarning();
+      
     });
+    document.addEventListener('DOMContentLoaded', function() {
+    checkSheilaEligibility();
+  });
   </script>
 </body>
 </html>
