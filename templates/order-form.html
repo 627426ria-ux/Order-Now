@@ -1627,6 +1627,7 @@
               <option value="P18">P18 – Rua Abaya</option>
               <option value="P19">P19 – Ayra Abaya</option>
               <option value="P20">P20 – Blossom abaya</option>
+              <option value="P21">P21 – Warda abaya</option>
             </select>
             <input type="number" name="quantity[]" class="quantity" min="1" value="1" placeholder="Qty" required>
           </div>
@@ -2110,7 +2111,7 @@
             <option value="P18">P18 – Rua Abaya</option>
             <option value="P19">P19 – Ayra Abaya</option>
             <option value="P20">P20 – Blossom abaya</option>
-            
+            <option value="P21">P21 – Warda abaya</option>
           </select>
           <input type="number" name="quantity[]" class="quantity" min="1" value="1" placeholder="Qty" required>
           <button type="button" class="remove-product-btn">×</button>
@@ -2271,7 +2272,7 @@ function checkSheilaEligibility() {
       
       if(pid && pid !== '') {
         // Size field - NO custom size option for P11-P20
-        const hasCustomSize = !['P11','P12','P13','P14','P15','P16','P17','P18','P19','P20'].includes(pid);
+        const hasCustomSize = !['P11','P12','P13','P14','P15','P16','P17','P18','P19','P20','P21'].includes(pid);
         
         let sizeHTML = `
           <div class="size-field-wrapper">
@@ -2337,7 +2338,7 @@ if(["P13","P14","P16","P17","P18"].includes(pid)) {
   `;
 }
       // Short shawl note for P01-P04
-      if(["P01","P02","P03","P04","P11","P15","P19","P20"].includes(pid)) {
+      if(["P01","P02","P03","P04","P11","P15","P19","P20","P21"].includes(pid)) {
         shawlContainer.innerHTML = '<div class="shawl-note">Short shawl included</div>';
       }
       if(pid === "P12") {
@@ -2392,8 +2393,8 @@ if(["P13","P14","P16","P17","P18"].includes(pid)) {
     });
 
     const prices = {
-      UAE:{P01:110,P02:110,P03:110,P04:130,P05:200,P06:190,P07:260,P08:170,P09:190,P10:190,P11:120,P12:150,P13:120,P14:160,P15:110,P16:150,P17:170,P18:165,P19:110,P20:110},
-      India:{P01:2650,P02:2650,P03:2650,P04:3130,P05:4800,P06:4630,P07:6240,P08:4090,P09:4570,P10:4570,P11:2890,P12:3610,P13:2890,P14:3870,P15:2650,P16:3610,P17:4090,P18:3970,P19:2660,P20:2660}
+      UAE:{P01:110,P02:110,P03:110,P04:130,P05:200,P06:190,P07:260,P08:170,P09:190,P10:190,P11:120,P12:150,P13:120,P14:160,P15:110,P16:150,P17:170,P18:165,P19:110,P20:110,P21:120},
+      India:{P01:2650,P02:2650,P03:2650,P04:3130,P05:4800,P06:4630,P07:6240,P08:4090,P09:4570,P10:4570,P11:2890,P12:3610,P13:2890,P14:3870,P15:2650,P16:3610,P17:4090,P18:3970,P19:2660,P20:2660,P21:2900}
     };
     const shawlUpgradeCharges = {
   UAE: 20,
