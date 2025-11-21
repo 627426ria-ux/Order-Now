@@ -314,5 +314,5 @@ def health():
     return {"status": "ok", "message": "Server is running"}, 200
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5006))
+    port = int(os.environ.get("PORT", 5009))
     app.run(debug=True, host="0.0.0.0", port=port)

@@ -1629,6 +1629,7 @@
               <option value="P20">P20 – Blossom abaya</option>
               <option value="P21">P21 – Warda abaya</option>
               <option value="P22">P22 – Brown Noir abaya</option>
+              <option value="P23">P23 – Reem Nida Set</option>
 
             </select>
             <input type="number" name="quantity[]" class="quantity" min="1" value="1" placeholder="Qty" required>
@@ -2115,6 +2116,7 @@
             <option value="P20">P20 – Blossom abaya</option>
             <option value="P21">P21 – Warda abaya</option>
             <option value="P22">P22 – Brown Noir abaya</option>
+            <option value="P23">P23 – Reem Nida Set</option>
           </select>
           <input type="number" name="quantity[]" class="quantity" min="1" value="1" placeholder="Qty" required>
           <button type="button" class="remove-product-btn">×</button>
@@ -2355,6 +2357,21 @@ if(pid === "P22") {
     </div>
   `;
 }
+
+if(pid === "P23") {
+  shawlContainer.innerHTML = '<div class="shawl-note">Set includes: Abaya + Inner Dress + Sheila</div>';
+  shawlLengthContainer.innerHTML = `
+    <div class="shawl-length-wrapper">
+      <div class="shawl-checkbox-container">
+        <input type="checkbox" name="shawl_upgrade_${rowIndex}" id="shawl_upgrade_${rowIndex}" value="longer">
+        <label for="shawl_upgrade_${rowIndex}" class="shawl-checkbox-label">
+          Upgrade to Longer Sheila (+10 AED / +240 INR)
+        </label>
+      </div>
+      <div class="shawl-upgrade-note">Check this to upgrade to a longer sheila for an additional charge of 10 AED (240 INR in India)</div>
+    </div>
+  `;
+}
       // Short shawl note for P01-P04
       if(["P01","P02","P03","P04","P11","P15","P19","P20","P21","P22"].includes(pid)) {
         shawlContainer.innerHTML = '<div class="shawl-note">Short shawl included</div>';
@@ -2411,17 +2428,19 @@ if(pid === "P22") {
     });
 
     const prices = {
-      UAE:{P01:110,P02:110,P03:110,P04:130,P05:200,P06:190,P07:260,P08:170,P09:190,P10:190,P11:120,P12:150,P13:120,P14:160,P15:110,P16:150,P17:170,P18:165,P19:110,P20:110,P21:120,P22:150},
-      India:{P01:2650,P02:2650,P03:2650,P04:3130,P05:4800,P06:4630,P07:6240,P08:4090,P09:4570,P10:4570,P11:2890,P12:3610,P13:2890,P14:3870,P15:2650,P16:3610,P17:4090,P18:3970,P19:2660,P20:2660,P21:2900,P22:3625}
+      UAE:{P01:110,P02:110,P03:110,P04:130,P05:200,P06:190,P07:260,P08:170,P09:190,P10:190,P11:120,P12:150,P13:120,P14:160,P15:110,P16:150,P17:170,P18:165,P19:110,P20:110,P21:120,P22:150,P23:150},
+      India:{P01:2650,P02:2650,P03:2650,P04:3130,P05:4800,P06:4630,P07:6240,P08:4090,P09:4570,P10:4570,P11:2890,P12:3610,P13:2890,P14:3870,P15:2650,P16:3610,P17:4090,P18:3970,P19:2660,P20:2660,P21:2900,P22:3625,P23:3580}
     };
     const shawlUpgradeCharges = {
   UAE: {
     default: 20,
-    P22: 30
+    P22: 30,
+    P23: 10
   },
   India: {
     default: 480,
-    P22: 725
+    P22: 725,
+    P23: 240
   }
 };
 
@@ -2448,18 +2467,30 @@ if(pid === "P22") {
     const price = prices[country][pid] || 0;
     let rowTotal = price * qty;
     
-    // NEW: Check for 2m shawl upgrade for P13, P14, P16, P17, P18
-    // NEW: Check for 2m shawl upgrade checkbox for P13, P14, P16, P17, P18
 // Check for 2m shawl upgrade checkbox
-if(["P13","P14","P16","P17","P18","P22"].includes(pid)) {
+// Check for shawl upgrade checkbox (P13, P14, P16, P17, P18, P22, P23)
+if(["P13","P14","P16","P17","P18","P22","P23"].includes(pid)) {
   const shawlUpgradeCheckbox = document.getElementById(`shawl_upgrade_${index}`);
   if(shawlUpgradeCheckbox && shawlUpgradeCheckbox.checked) {
     // Get the appropriate upgrade charge for this product
-    const upgradeChargePerUnit = pid === "P22" ? shawlUpgradeCharges[country].P22 : shawlUpgradeCharges[country].default;
+    let upgradeChargePerUnit;
+    let upgradeLabel;
+    
+    if(pid === "P22") {
+      upgradeChargePerUnit = shawlUpgradeCharges[country].P22;
+      upgradeLabel = "2m Shawl Upgrade";
+    } else if(pid === "P23") {
+      upgradeChargePerUnit = shawlUpgradeCharges[country].P23;
+      upgradeLabel = "Longer Sheila Upgrade";
+    } else {
+      upgradeChargePerUnit = shawlUpgradeCharges[country].default;
+      upgradeLabel = "2m Shawl Upgrade";
+    }
+    
     const upgradeCharge = upgradeChargePerUnit * qty;
     rowTotal += upgradeCharge;
     detailsHTML += `<tr><td>${pid}</td><td>${qty}</td><td>${currencySymbol} ${price}</td><td>${currencySymbol} ${price * qty}</td></tr>`;
-    detailsHTML += `<tr><td colspan="2">  └ 2m Shawl Upgrade</td><td>${currencySymbol} ${upgradeChargePerUnit}</td><td>${currencySymbol} ${upgradeCharge}</td></tr>`;
+    detailsHTML += `<tr><td colspan="2">  └ ${upgradeLabel}</td><td>${currencySymbol} ${upgradeChargePerUnit}</td><td>${currencySymbol} ${upgradeCharge}</td></tr>`;
   } else {
     detailsHTML += `<tr><td>${pid}</td><td>${qty}</td><td>${currencySymbol} ${price}</td><td>${currencySymbol} ${rowTotal}</td></tr>`;
   }
